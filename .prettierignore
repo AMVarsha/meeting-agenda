@@ -1,0 +1,7 @@
+.angular
+.firebase
+dist
+node_modules
+package-lock.json
+package.json
+tsconfig.json
