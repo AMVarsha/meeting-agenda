@@ -1,0 +1,132 @@
+<tui-scrollbar>
+  <h2 class="tui-text_h2">Meeting Agenda</h2>
+  <div class="row">
+    <div class="tui-container">
+      <table tuiTable [columns]="attendees_columns">
+        <thead tuiThead>
+          <tr tuiThGroup>
+            <th *tuiHead="'name'" tuiTh class="first" [sorter]="null">Name</th>
+            <th *tuiHead="'department'" tuiTh [sorter]="null">
+              <tui-input></tui-input>
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="tui-container">
+      <tui-accordion>
+        <tui-accordion-item>
+          <h4>1. Meeting Objective</h4>
+          <ng-template tuiAccordionItemContent>
+            <div class="tui-col-12">
+              <tui-text-area> </tui-text-area>
+            </div>
+          </ng-template>
+        </tui-accordion-item>
+      </tui-accordion>
+    </div>
+    <div class="tui-container">
+      <tui-accordion>
+        <tui-accordion-item>
+          <h4>2. Attendees</h4>
+          <ng-template tuiAccordionItemContent>
+            <table tuiTable [columns]="attendees_columns">
+              <thead tuiThead>
+                <tr tuiThGroup>
+                  <th *tuiHead="'name'" tuiTh class="first" [sorter]="null">
+                    Name
+                  </th>
+                  <th *tuiHead="'department'" tuiTh [sorter]="null">
+                    Department / Division
+                  </th>
+                  <th *tuiHead="'mail'" tuiTh [sorter]="null">E-mail</th>
+                  <th *tuiHead="'phone'" tuiTh [sorter]="null">Phone</th>
+                </tr>
+              </thead>
+              <tbody tuiTbody>
+                <tr tuiTr>
+                  <th *tuiCell="'name'" tuiTd>
+                    <tui-input></tui-input>
+                  </th>
+                  <th *tuiCell="'department'" tuiTd>
+                    <tui-input></tui-input>
+                  </th>
+                  <th *tuiCell="'mail'" tuiTd>
+                    <tui-input></tui-input>
+                  </th>
+                  <th *tuiCell="'phone'" tuiTd>
+                    <tui-input></tui-input>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </ng-template>
+        </tui-accordion-item>
+      </tui-accordion>
+    </div>
+    <div class="tui-container">
+      <tui-accordion>
+        <tui-accordion-item>
+          <h4>3. Meeting Agenda</h4>
+          <ng-template tuiAccordionItemContent>
+            <table tuiTable [columns]="agenda_columns">
+              <thead tuiThead>
+                <tr tuiThGroup>
+                  <th *tuiHead="'topic'" tuiTh [sorter]="null">Topic</th>
+                  <th *tuiHead="'owner'" tuiTh [sorter]="null">Owner</th>
+                  <th *tuiHead="'time'" tuiTh [sorter]="null">Time</th>
+                </tr>
+              </thead>
+              <tbody tuiTbody>
+                <tr tuiTr>
+                  <th *tuiCell="'topic'" tuiTd>
+                    <tui-input></tui-input>
+                  </th>
+                  <th *tuiCell="'owner'" tuiTd>
+                    <tui-input></tui-input>
+                  </th>
+                  <th *tuiCell="'time'" tuiTd>
+                    <tui-input></tui-input>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </ng-template>
+        </tui-accordion-item>
+      </tui-accordion>
+    </div>
+    <div class="tui-container">
+      <tui-accordion>
+        <tui-accordion-item>
+          <h4>
+            4. Preparation (documents/handouts to bring, reading material etc.)
+          </h4>
+          <ng-template tuiAccordionItemContent>
+            <table tuiTable [columns]="preparation_columns">
+              <thead tuiThead>
+                <tr tuiThGroup>
+                  <th *tuiHead="'description'" tuiTh [sorter]="null">
+                    Description
+                  </th>
+                  <th *tuiHead="'prepared_by'" tuiTh [sorter]="null">
+                    Prepared By
+                  </th>
+                </tr>
+              </thead>
+              <tbody tuiTbody>
+                <tr tuiTr>
+                  <th *tuiCell="'description'" tuiTd>
+                    <tui-input></tui-input>
+                  </th>
+                  <th *tuiCell="'prepared_by'" tuiTd>
+                    <tui-input></tui-input>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </ng-template>
+        </tui-accordion-item>
+      </tui-accordion>
+    </div>
+  </div>
+</tui-scrollbar>
