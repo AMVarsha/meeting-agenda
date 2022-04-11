@@ -7,21 +7,27 @@ import {
   TuiRootModule,
   TuiScrollbarModule,
   TuiSvgModule,
-  iconsPathFactory
+  iconsPathFactory,
+  TuiButtonModule
 } from '@taiga-ui/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MeetingAgendaComponent } from './pages/components/meeting-agenda/meeting-agenda.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   TuiAccordionModule,
+  TuiFieldErrorModule,
   TuiInputModule,
+  TuiInputNumberModule,
   TuiTextAreaModule
 } from '@taiga-ui/kit';
+import { CommonModule } from '@angular/common';
+import { TuiOverscrollModule } from '@taiga-ui/cdk';
 
 @NgModule({
   declarations: [AppComponent, MeetingAgendaComponent],
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -32,7 +38,13 @@ import {
     TuiSvgModule,
     TuiInputModule,
     TuiTextAreaModule,
-    TuiScrollbarModule
+    TuiScrollbarModule,
+    ReactiveFormsModule,
+    FormsModule,
+    TuiFieldErrorModule,
+    TuiButtonModule,
+    TuiOverscrollModule,
+    TuiInputNumberModule
   ],
   providers: [
     {

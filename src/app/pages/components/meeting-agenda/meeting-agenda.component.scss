@@ -11,3 +11,15 @@ h2 {
 table {
   width: 100%;
 }
+button {
+  float: right;
+}
+.box {
+  height: 100%;
+}
+::ng-deep .header:focus {
+  background-image: linear-gradient(to right, #003D57, #505874);
+}
+h4 {
+  color: #F2989E;
+}
