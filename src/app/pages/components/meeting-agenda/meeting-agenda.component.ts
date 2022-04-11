@@ -1,12 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { COLUMNS } from '../constants';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
-export function maxLengthValidator(context: {requiredLength: string}): string {
+export function maxLengthValidator(context: {
+  requiredLength: string;
+}): string {
   return `Maximum length — ${context.requiredLength} is required`;
 }
 
-export function minLengthValidator(context: {requiredLength: string}): string {
+export function minLengthValidator(context: {
+  requiredLength: string;
+}): string {
   return `Minimum length — ${context.requiredLength} is required`;
 }
 
@@ -22,10 +32,10 @@ export function minLengthValidator(context: {requiredLength: string}): string {
         email: 'Enter a valid email',
         phone: 'Enter a valid mobile',
         maxlength: maxLengthValidator,
-        minlength: minLengthValidator,
-      },
-    },
-  ],
+        minlength: minLengthValidator
+      }
+    }
+  ]
 })
 export class MeetingAgendaComponent implements OnInit {
   readonly details_columns = COLUMNS.details;
@@ -34,7 +44,7 @@ export class MeetingAgendaComponent implements OnInit {
   readonly preparation_columns = COLUMNS.preparation;
   meetingForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {}
   ngOnInit(): void {
     this.initializeForm();
   }
@@ -43,11 +53,11 @@ export class MeetingAgendaComponent implements OnInit {
       objective: ['', [Validators.required, Validators.minLength(5)]],
       attendees_rows: this.formBuilder.array([this.initAttendeesRows()]),
       agenda_rows: this.formBuilder.array([this.initAgendaRows()]),
-      preparation_rows: this.formBuilder.array([this.initPreparationRows()]),
+      preparation_rows: this.formBuilder.array([this.initPreparationRows()])
     });
   }
   get attendeesData(): FormArray {
-    return this.meetingForm.get("attendees_rows") as FormArray;
+    return this.meetingForm.get('attendees_rows') as FormArray;
   }
   initAttendeesRows(): AbstractControl {
     return this.formBuilder.group({
@@ -61,20 +71,20 @@ export class MeetingAgendaComponent implements OnInit {
     return this.formBuilder.group({
       topic: ['', Validators.required],
       owner: ['', Validators.required],
-      time: ['', Validators.required],
+      time: ['', Validators.required]
     });
   }
   initPreparationRows(): AbstractControl {
     return this.formBuilder.group({
       description: ['', [Validators.required, Validators.minLength(5)]],
       prepared_by: ['', Validators.required]
-    })
+    });
   }
   get agendaData(): FormArray {
-    return this.meetingForm.get("agenda_rows") as FormArray;
+    return this.meetingForm.get('agenda_rows') as FormArray;
   }
   get preparationData(): FormArray {
-    return this.meetingForm.get("preparation_rows") as FormArray;
+    return this.meetingForm.get('preparation_rows') as FormArray;
   }
 
   addNewRow(data: string): void {
