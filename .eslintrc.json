@@ -23,6 +23,7 @@
             "type": "element"
           }
         ],
+        "no-unused-vars": "off",
         "@angular-eslint/directive-selector": [
           "error",
           {

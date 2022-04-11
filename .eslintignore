@@ -5,5 +5,3 @@ karma.conf.js
 test.ts
 main.ts
 node_modules/*
-meeting-agenda.component.ts
-constants.ts
