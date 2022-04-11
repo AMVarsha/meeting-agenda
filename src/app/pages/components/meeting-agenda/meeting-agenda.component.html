@@ -6,42 +6,22 @@
         <table tuiTable [columns]="details_columns">
           <thead tuiThead>
             <tr tuiThGroup>
-              <th
-                *tuiHead="meeting_name"
-                tuiTh
-                rowspan="2"
-                class="first"
-                [sorter]="null"
-                [sticky]="true"
-              >
+              <th *tuiHead="'meeting_name'" tuiTh rowspan="2" class="first" [sorter]="null" [sticky]="true">
                 Name
               </th>
-              <th
-                *tuiHead="dom"
-                tuiTh
-                rowspan="2"
-                class="second"
-                [sticky]="true"
-              >
+              <th *tuiHead="'dom'" tuiTh rowspan="2" class="second" [sticky]="true">
                 Date of Meeting
               </th>
-              <th
-                *tuiHead="meeting_facilitator"
-                tuiTh
-                colspan="2"
-                [sorter]="null"
-              >
+              <th *tuiHead="'meeting_facilitator'" tuiTh colspan="2" [sorter]="null">
                 Meeting Facilitator
               </th>
-              <ng-container *tuiHead="unit"></ng-container>
+              <ng-container *tuiHead="'unit'"></ng-container>
             </tr>
             <tr tuiThGroup>
-              <th
-                *tuiHead="meeting_facilitator"
-                tuiTh
-                class="number border"
-              ></th>
-              <th *tuiHead="meeting_facilitator" tuiTh></th>
+              <th *tuiHead="'meeting_facilitator'" tuiTh class="number border">
+
+              </th>
+              <th *tuiHead="'meeting_facilitator'" tuiTh></th>
             </tr>
           </thead>
         </table>
@@ -66,75 +46,50 @@
           <tui-accordion-item>
             <h4>2. Attendees</h4>
             <ng-template tuiAccordionItemContent>
-              <button
-                tuiIconButton
-                type="button"
-                class="tui-space_bottom-3"
-                icon="tuiIconPlusCircleLarge"
-                (click)="addNewRow('attendees')"
-              ></button
-              ><br />
+              <button tuiIconButton type="button" class="tui-space_bottom-3" icon="tuiIconPlusCircleLarge"
+                (click)="addNewRow('attendees')"></button><br>
               <table tuiTable [columns]="attendees_columns">
                 <thead tuiThead>
                   <tr tuiThGroup>
-                    <th *tuiHead="name" tuiTh class="first" [sorter]="null">
+                    <th *tuiHead="'name'" tuiTh class="first" [sorter]="null">
                       Name
                     </th>
-                    <th *tuiHead="department" tuiTh [sorter]="null">
+                    <th *tuiHead="'department'" tuiTh [sorter]="null">
                       Department / Division
                     </th>
-                    <th *tuiHead="mail" tuiTh [sorter]="null">E-mail</th>
-                    <th *tuiHead="phone" tuiTh [sorter]="null">Phone</th>
+                    <th *tuiHead="'mail'" tuiTh [sorter]="null">E-mail</th>
+                    <th *tuiHead="'phone'" tuiTh [sorter]="null">Phone</th>
                   </tr>
                 </thead>
                 <tbody tuiTbody formArrayName="attendees_rows">
-                  <tr
-                    tuiTr
-                    *ngFor="
-                      let itemrow of meetingForm.get('attendees_rows')[
-                        'controls'
-                      ];
-                      let i = index;
-                      let l = last
-                    "
-                    [formGroupName]="i"
-                  >
-                    <th *tuiCell="name" tuiTd>
+                  <tr tuiTr
+                    *ngFor="let itemrow of meetingForm.get('attendees_rows')['controls']; let i=index;let l=last"
+                    [formGroupName]="i">
+                    <th *tuiCell="'name'" tuiTd>
                       <tui-input formControlName="name">
                         <span class="tui-required"></span>
                       </tui-input>
                     </th>
-                    <th *tuiCell="department" tuiTd>
+                    <th *tuiCell="'department'" tuiTd>
                       <tui-input formControlName="department">
                         <span class="tui-required"></span>
                       </tui-input>
                     </th>
-                    <th *tuiCell="mail" tuiTd>
+                    <th *tuiCell="'mail'" tuiTd>
                       <tui-input formControlName="mail">
                         <span class="tui-required"></span>
                       </tui-input>
                       <tui-field-error formControlName="mail"></tui-field-error>
                     </th>
-                    <th *tuiCell="phone" tuiTd>
+                    <th *tuiCell="'phone'" tuiTd>
                       <tui-input-number formControlName="phone">
                         <span class="tui-required"></span>
                       </tui-input-number>
                     </th>
-                    <th *tuiCell="actions" tuiTd>
-                      <button
-                        tuiIconButton
-                        *ngIf="
-                          meetingForm.get('attendees_rows')['controls'].length >
-                          1
-                        "
-                        (click)="deleteRow('attendees', i)"
-                        appearance="flat"
-                        size="s"
-                        icon="tuiIconTrash"
-                        title="Remove"
-                        shape="rounded"
-                        class="remove"
-                      ></button>
+                    <th *tuiCell="'actions'" tuiTd>
+                      <button tuiIconButton *ngIf="meetingForm.get('attendees_rows')['controls'].length > 1"
+                        (click)="deleteRow('attendees',i)" appearance="flat" size="s" icon="tuiIconTrash" title="Remove"
+                        shape="rounded" class="remove"></button>
                     </th>
                   </tr>
                 </tbody>
@@ -148,61 +103,38 @@
           <tui-accordion-item>
             <h4>3. Meeting Agenda</h4>
             <ng-template tuiAccordionItemContent>
-              <button
-                tuiIconButton
-                type="button"
-                class="tui-space_bottom-3"
-                icon="tuiIconPlusCircleLarge"
-                (click)="addNewRow('agenda')"
-              ></button
-              ><br />
+              <button tuiIconButton type="button" class="tui-space_bottom-3" icon="tuiIconPlusCircleLarge"
+                (click)="addNewRow('agenda')"></button><br>
               <table tuiTable [columns]="agenda_columns">
                 <thead tuiThead>
                   <tr tuiThGroup>
-                    <th *tuiHead="topic" tuiTh [sorter]="null">Topic</th>
-                    <th *tuiHead="owner" tuiTh [sorter]="null">Owner</th>
-                    <th *tuiHead="time" tuiTh [sorter]="null">Time</th>
+                    <th *tuiHead="'topic'" tuiTh [sorter]="null">Topic</th>
+                    <th *tuiHead="'owner'" tuiTh [sorter]="null">Owner</th>
+                    <th *tuiHead="'time'" tuiTh [sorter]="null">Time</th>
                   </tr>
                 </thead>
                 <tbody tuiTbody formArrayName="agenda_rows">
-                  <tr
-                    tuiTr
-                    *ngFor="
-                      let itemrow of meetingForm.get('agenda_rows')['controls'];
-                      let i = index;
-                      let l = last
-                    "
-                    [formGroupName]="i"
-                  >
-                    <th *tuiCell="topic" tuiTd>
+                  <tr tuiTr *ngFor="let itemrow of meetingForm.get('agenda_rows')['controls']; let i=index;let l=last"
+                    [formGroupName]="i">
+                    <th *tuiCell="'topic'" tuiTd>
                       <tui-input formControlName="topic">
                         <span class="tui-required"></span>
                       </tui-input>
                     </th>
-                    <th *tuiCell="owner" tuiTd>
+                    <th *tuiCell="'owner'" tuiTd>
                       <tui-input formControlName="owner">
                         <span class="tui-required"></span>
                       </tui-input>
                     </th>
-                    <th *tuiCell="time" tuiTd>
+                    <th *tuiCell="'time'" tuiTd>
                       <tui-input formControlName="time">
                         <span class="tui-required"></span>
                       </tui-input>
                     </th>
-                    <th *tuiCell="actions" tuiTd>
-                      <button
-                        tuiIconButton
-                        *ngIf="
-                          meetingForm.get('agenda_rows')['controls'].length > 1
-                        "
-                        (click)="deleteRow('agenda', i)"
-                        appearance="flat"
-                        size="s"
-                        icon="tuiIconTrash"
-                        title="Remove"
-                        shape="rounded"
-                        class="remove"
-                      ></button>
+                    <th *tuiCell="'actions'" tuiTd>
+                      <button tuiIconButton *ngIf="meetingForm.get('agenda_rows')['controls'].length > 1"
+                        (click)="deleteRow('agenda',i)" appearance="flat" size="s" icon="tuiIconTrash" title="Remove"
+                        shape="rounded" class="remove"></button>
                     </th>
                   </tr>
                 </tbody>
@@ -215,66 +147,40 @@
         <tui-accordion>
           <tui-accordion-item>
             <h4>
-              4. Preparation (documents/handouts to bring, reading material
-              etc.)
+              4. Preparation (documents/handouts to bring, reading material etc.)
             </h4>
             <ng-template tuiAccordionItemContent>
-              <button
-                tuiIconButton
-                type="button"
-                class="tui-space_bottom-3"
-                icon="tuiIconPlusCircleLarge"
-                (click)="addNewRow('preparation')"
-              ></button
-              ><br />
+              <button tuiIconButton type="button" class="tui-space_bottom-3" icon="tuiIconPlusCircleLarge"
+                (click)="addNewRow('preparation')"></button><br>
               <table tuiTable [columns]="preparation_columns">
                 <thead tuiThead>
                   <tr tuiThGroup>
-                    <th *tuiHead="description" tuiTh [sorter]="null">
+                    <th *tuiHead="'description'" tuiTh [sorter]="null">
                       Description
                     </th>
-                    <th *tuiHead="prepared_by" tuiTh [sorter]="null">
+                    <th *tuiHead="'prepared_by'" tuiTh [sorter]="null">
                       Prepared By
                     </th>
                   </tr>
                 </thead>
                 <tbody tuiTbody formArrayName="preparation_rows">
-                  <tr
-                    tuiTr
-                    *ngFor="
-                      let itemrow of meetingForm.get('preparation_rows')[
-                        'controls'
-                      ];
-                      let i = index;
-                      let l = last
-                    "
-                    [formGroupName]="i"
-                  >
-                    <th *tuiCell="description" tuiTd>
+                  <tr tuiTr
+                    *ngFor="let itemrow of meetingForm.get('preparation_rows')['controls']; let i=index;let l=last"
+                    [formGroupName]="i">
+                    <th *tuiCell="'description'" tuiTd>
                       <tui-input formControlName="description">
                         <span class="tui-required"></span>
                       </tui-input>
                     </th>
-                    <th *tuiCell="prepared_by" tuiTd>
+                    <th *tuiCell="'prepared_by'" tuiTd>
                       <tui-input formControlName="prepared_by">
                         <span class="tui-required"></span>
                       </tui-input>
                     </th>
-                    <th *tuiCell="actions" tuiTd>
-                      <button
-                        tuiIconButton
-                        *ngIf="
-                          meetingForm.get('preparation_rows')['controls']
-                            .length > 1
-                        "
-                        (click)="deleteRow('preparation', i)"
-                        appearance="flat"
-                        size="s"
-                        icon="tuiIconTrash"
-                        title="Remove"
-                        shape="rounded"
-                        class="remove"
-                      ></button>
+                    <th *tuiCell="'actions'" tuiTd>
+                      <button tuiIconButton *ngIf="meetingForm.get('preparation_rows')['controls'].length > 1"
+                        (click)="deleteRow('preparation',i)" appearance="flat" size="s" icon="tuiIconTrash"
+                        title="Remove" shape="rounded" class="remove"></button>
                     </th>
                   </tr>
                 </tbody>
