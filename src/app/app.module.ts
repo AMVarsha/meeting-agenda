@@ -8,7 +8,8 @@ import {
   TuiScrollbarModule,
   TuiSvgModule,
   iconsPathFactory,
-  TuiButtonModule
+  TuiButtonModule,
+  TuiLabelModule
 } from '@taiga-ui/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,8 +18,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   TuiAccordionModule,
   TuiFieldErrorModule,
+  TuiInputDateModule,
   TuiInputModule,
   TuiInputNumberModule,
+  TuiInputTimeModule,
   TuiTextAreaModule
 } from '@taiga-ui/kit';
 import { CommonModule } from '@angular/common';
@@ -44,7 +47,10 @@ import { TuiOverscrollModule } from '@taiga-ui/cdk';
     TuiFieldErrorModule,
     TuiButtonModule,
     TuiOverscrollModule,
-    TuiInputNumberModule
+    TuiInputNumberModule,
+    TuiLabelModule,
+    TuiInputDateModule,
+    TuiInputTimeModule
   ],
   providers: [
     {

@@ -3,11 +3,16 @@ import {
   AbstractControl,
   FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   Validators
 } from '@angular/forms';
 import { COLUMNS } from '../constants';
-import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
+import { tuiCreateTimePeriods, TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { TuiDay } from '@taiga-ui/cdk';
+
 export function maxLengthValidator(context: {
   requiredLength: string;
 }): string {
@@ -43,6 +48,7 @@ export class MeetingAgendaComponent implements OnInit {
   readonly agenda_columns = COLUMNS.agenda;
   readonly preparation_columns = COLUMNS.preparation;
   meetingForm: FormGroup;
+  items1 = tuiCreateTimePeriods();
 
   constructor(private formBuilder: FormBuilder) {}
   ngOnInit(): void {
@@ -50,6 +56,11 @@ export class MeetingAgendaComponent implements OnInit {
   }
   initializeForm(): void {
     this.meetingForm = this.formBuilder.group({
+      meeting_name: ['', Validators.required],
+      dom: new FormControl(new TuiDay(2017, 2, 15)),
+      meeting_facilitator: ['', Validators.required],
+      time: ['', Validators.required],
+      location: ['', Validators.required],
       objective: ['', [Validators.required, Validators.minLength(5)]],
       attendees_rows: this.formBuilder.array([this.initAttendeesRows()]),
       agenda_rows: this.formBuilder.array([this.initAgendaRows()]),
@@ -105,5 +116,18 @@ export class MeetingAgendaComponent implements OnInit {
     } else if (data === 'preparation') {
       this.preparationData.removeAt(index);
     }
+  }
+
+  openPDF(): void {
+    let DATA: any = document.getElementById('htmlData');
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+      PDF.save('mom.pdf');
+    });
   }
 }
