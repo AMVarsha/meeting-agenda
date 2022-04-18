@@ -62,9 +62,32 @@ export class MeetingAgendaComponent {
             headerRows: 2,
             widths: ['*', '*', '*', '*'],
             body: [
-              [{ text: 'Meeting / Project Name', style: 'tableHeader', colSpan: 2, }, {}, { text: this.meetingAgenda.meetingName, style: 'tableBody', colSpan: 2 }, {}],
-              [{ text: 'Date of Meeting', style: 'tableHeader' }, { text: this.meetingAgenda.dom, style: 'tableBody'}, { text: 'Time', style: 'tableHeader' }, { text: this.meetingAgenda.time, style: 'tableBody'}],
-              [{ text: 'Meeting Facilitator', style: 'tableHeader' }, { text: this.meetingAgenda.facilitator, style: 'tableBody'}, { text: 'Location', style: 'tableHeader'}, { text: this.meetingAgenda.location, style: 'tableBody'}],
+              [
+                {
+                  text: 'Meeting / Project Name',
+                  style: 'tableHeader',
+                  colSpan: 2
+                },
+                {},
+                {
+                  text: this.meetingAgenda.meetingName,
+                  style: 'tableBody',
+                  colSpan: 2
+                },
+                {}
+              ],
+              [
+                { text: 'Date of Meeting', style: 'tableHeader' },
+                { text: this.meetingAgenda.dom, style: 'tableBody' },
+                { text: 'Time', style: 'tableHeader' },
+                { text: this.meetingAgenda.time, style: 'tableBody' }
+              ],
+              [
+                { text: 'Meeting Facilitator', style: 'tableHeader' },
+                { text: this.meetingAgenda.facilitator, style: 'tableBody' },
+                { text: 'Location', style: 'tableHeader' },
+                { text: this.meetingAgenda.location, style: 'tableBody' }
+              ]
             ]
           }
         },
@@ -76,14 +99,18 @@ export class MeetingAgendaComponent {
           table: {
             widths: '*',
             body: [
-              [{
-                text: 'Meeting Objective',
-                style: 'tableHeader'
-              }],
-              [{
-                text: this.meetingAgenda.objective,
-                style: 'tableBody'
-              }]
+              [
+                {
+                  text: 'Meeting Objective',
+                  style: 'tableHeader'
+                }
+              ],
+              [
+                {
+                  text: this.meetingAgenda.objective,
+                  style: 'tableBody'
+                }
+              ]
             ]
           }
         },
@@ -96,9 +123,19 @@ export class MeetingAgendaComponent {
             headerRows: 2,
             widths: ['*', '*', '*', '*'],
             body: [
-              [{ text: 'Meeting Attendees', style: 'tableHeader', colSpan: 4 }, '', '', ''],
+              [
+                { text: 'Meeting Attendees', style: 'tableHeader', colSpan: 4 },
+                '',
+                '',
+                ''
+              ],
               ['Name', 'Department', 'Mail', 'Phone'],
-              ...this.meetingAgenda.attendees.map(p => ([p.name, p.department, p.mail, p.phone]))
+              ...this.meetingAgenda.attendees.map((p) => [
+                p.name,
+                p.department,
+                p.mail,
+                p.phone
+              ])
             ]
           }
         },
@@ -111,9 +148,17 @@ export class MeetingAgendaComponent {
             headerRows: 2,
             widths: ['*', '*', '*'],
             body: [
-              [{ text: 'Meeting Agenda', style: 'tableHeader', colSpan: 3 }, '', ''],
+              [
+                { text: 'Meeting Agenda', style: 'tableHeader', colSpan: 3 },
+                '',
+                ''
+              ],
               ['Topic', 'Owner', 'Time'],
-              ...this.meetingAgenda.agenda.map(p => ([p.topic, p.owner, p.time]))
+              ...this.meetingAgenda.agenda.map((p) => [
+                p.topic,
+                p.owner,
+                p.time
+              ])
             ]
           }
         },
@@ -126,12 +171,22 @@ export class MeetingAgendaComponent {
             headerRows: 2,
             widths: ['*', '*'],
             body: [
-              [{ text: 'Preparation (documents/handouts to bring, reading material etc.)', style: 'tableHeader', colSpan: 2 }, ''],
+              [
+                {
+                  text: 'Preparation (documents/handouts to bring, reading material etc.)',
+                  style: 'tableHeader',
+                  colSpan: 2
+                },
+                ''
+              ],
               ['Description', 'Prepared By'],
-              ...this.meetingAgenda.documents.map(p => ([p.description, p.preparedBy]))
+              ...this.meetingAgenda.documents.map((p) => [
+                p.description,
+                p.preparedBy
+              ])
             ]
           }
-        },
+        }
       ],
       defaultStyle: {
         alignment: 'justify'
@@ -140,13 +195,13 @@ export class MeetingAgendaComponent {
         title: this.meetingAgenda.meetingName + '_MEETING MINUTES',
         author: this.meetingAgenda.meetingName,
         subject: 'MOM',
-        keywords: 'MOM',
+        keywords: 'MOM'
       },
       styles: {
         header: {
           fontSize: 18,
           bold: true,
-          margin: [0, 20, 0, 10],
+          margin: [0, 20, 0, 10]
         },
         sectionHeader: {
           bold: true,
@@ -161,11 +216,11 @@ export class MeetingAgendaComponent {
           margin: [0, 8],
           fontSize: 14,
           color: '#ff7043',
-          bold: true,
+          bold: true
         },
         tableBody: {
           margin: [0, 8],
-          fontSize: 12,
+          fontSize: 12
         }
       }
     };
