@@ -21,6 +21,7 @@ import {
   TuiInputDateModule,
   TuiInputModule,
   TuiInputNumberModule,
+  TuiInputPhoneModule,
   TuiInputTimeModule,
   TuiTextAreaModule
 } from '@taiga-ui/kit';
@@ -50,7 +51,8 @@ import { TuiOverscrollModule } from '@taiga-ui/cdk';
     TuiInputNumberModule,
     TuiLabelModule,
     TuiInputDateModule,
-    TuiInputTimeModule
+    TuiInputTimeModule,
+    TuiInputPhoneModule
   ],
   providers: [
     {

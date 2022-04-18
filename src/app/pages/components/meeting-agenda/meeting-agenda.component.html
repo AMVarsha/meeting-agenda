@@ -1,71 +1,49 @@
 <tui-scrollbar class="box">
   <div id="htmlData">
     <h2 class="tui-text_h2">Meeting Agenda</h2>
-    <form [formGroup]="meetingForm">
+    <form #meetingForm="ngForm">
       <div class="row">
         <div class="tui-container">
-          <button
-            tuiButton
-            type="button"
-            appearance="accent"
-            class="tui-space_right-3 tui-space_bottom-3"
-            icon="tuiIconDownloadLarge"
-            (click)="openPDF()"
-          >
-            Download as PDF</button
-          ><br /><br /><br />
+          <button tuiButton type="button" appearance="accent" class="tui-space_right-3 tui-space_bottom-3"
+            icon="tuiIconDownloadLarge" (click)="generatePdf()">
+            Download as PDF</button><br /><br /><br />
           <div class="tui-form__row tui-form__row_multi-fields">
             <div class="tui-form__multi-field">
               <label tuiLabel label="Meeting / Project Name">
-                <tui-input
-                  formControlName="meeting_name"
-                  tuiTextfieldSize="m"
-                  tuiTextfieldLabelOutside="true"
-                >
+                <tui-input tuiTextfieldSize="m" tuiTextfieldLabelOutside="true" [(ngModel)]="meetingAgenda.meetingName"
+                  [ngModelOptions]="{standalone: true}">
                 </tui-input>
               </label>
             </div>
             <div class="tui-form__multi-field">
               <label tuiLabel label="Date of Meeting">
-                <tui-input-date
-                  formControlName="dom"
-                  tuiTextfieldSize="m"
-                  tuiTextfieldLabelOutside="true"
-                >
+                <tui-input-date tuiTextfieldSize="m" tuiTextfieldLabelOutside="true" [(ngModel)]="meetingAgenda.dom"
+                  [ngModelOptions]="{standalone: true}">
                 </tui-input-date>
               </label>
-              <!-- <tui-field-error formControlName="moneyValue"></tui-field-error> -->
             </div>
           </div>
           <div class="tui-form__row tui-form__row_multi-fields">
             <div class="tui-form__multi-field">
               <label tuiLabel label="Meeting Facilitator">
-                <tui-input
-                  formControlName="meeting_facilitator"
-                  tuiTextfieldSize="m"
-                  tuiTextfieldLabelOutside="true"
-                >
+                <tui-input tuiTextfieldSize="m" tuiTextfieldLabelOutside="true" [(ngModel)]="meetingAgenda.facilitator"
+                  [ngModelOptions]="{standalone: true}">
                 </tui-input>
               </label>
-              <!-- <tui-field-error formControlName="meeting_facilitator"></tui-field-error> -->
             </div>
             <div class="tui-form__multi-field">
               <label tuiLabel label="Time">
-                <tui-input-time formControlName="time" [items]="items1">
+                <tui-input-time [items]="items1" [(ngModel)]="meetingAgenda.time" [ngModelOptions]="{standalone: true}">
                   Input time
                 </tui-input-time>
               </label>
             </div>
             <div class="tui-form__multi-field">
               <label tuiLabel label="Location">
-                <tui-input
-                  formControlName="location"
-                  tuiTextfieldSize="m"
-                  tuiTextfieldLabelOutside="true"
-                >
+                <tui-input tuiTextfieldSize="m" tuiTextfieldLabelOutside="true" [(ngModel)]="meetingAgenda.location"
+                  [ngModelOptions]="{standalone: true}">
                 </tui-input>
               </label>
-              <!-- <tui-field-error formControlName="meeting_facilitator"></tui-field-error> -->
             </div>
           </div>
         </div>
@@ -75,12 +53,10 @@
               <h4>1. Meeting Objective</h4>
               <ng-template tuiAccordionItemContent>
                 <div class="tui-col-12">
-                  <tui-text-area formControlName="objective">
+                  <tui-text-area [(ngModel)]="meetingAgenda.objective" [ngModelOptions]="{standalone: true}">
                     <span class="tui-required"></span>
                   </tui-text-area>
-                  <tui-field-error
-                    formControlName="objective"
-                  ></tui-field-error>
+                  <tui-field-error></tui-field-error>
                 </div>
               </ng-template>
             </tui-accordion-item>
@@ -91,14 +67,8 @@
             <tui-accordion-item>
               <h4>2. Attendees</h4>
               <ng-template tuiAccordionItemContent>
-                <button
-                  tuiIconButton
-                  type="button"
-                  class="tui-space_bottom-3"
-                  icon="tuiIconPlusCircleLarge"
-                  (click)="addNewRow('attendees')"
-                ></button
-                ><br />
+                <button tuiIconButton type="button" class="tui-space_bottom-3" icon="tuiIconPlusCircleLarge"
+                  (click)="addNewRow('attendees')"></button><br />
                 <table tuiTable [columns]="attendees_columns">
                   <thead tuiThead>
                     <tr tuiThGroup>
@@ -112,56 +82,39 @@
                       <th *tuiHead="'phone'" tuiTh [sorter]="null">Phone</th>
                     </tr>
                   </thead>
-                  <tbody tuiTbody formArrayName="attendees_rows">
-                    <tr
-                      tuiTr
-                      *ngFor="
-                        let itemrow of meetingForm.get('attendees_rows')[
-                          'controls'
-                        ];
-                        let i = index;
-                        let l = last
-                      "
-                      [formGroupName]="i"
-                    >
+                  <tbody tuiTbody>
+                    <tr tuiTr *ngFor="let attendees of meetingAgenda.attendees; let i=index">
                       <th *tuiCell="'name'" tuiTd>
-                        <tui-input formControlName="name">
-                          <span class="tui-required"></span>
+                        <tui-input>
+                          <input tuiTextfield name="name{{i}}"
+                            [ngClass]="{'is-invalid': meetingForm.submitted && name.invalid}" id="name"
+                            [(ngModel)]="attendees.name" #name="ngModel" required
+                            [ngModelOptions]="{standalone: true}" />
                         </tui-input>
                       </th>
                       <th *tuiCell="'department'" tuiTd>
-                        <tui-input formControlName="department">
-                          <span class="tui-required"></span>
+                        <tui-input>
+                          <input tuiTextfield name="department{{i}}"
+                            [ngClass]="{'is-invalid': meetingForm.submitted && department.invalid}" id="department"
+                            [(ngModel)]="attendees.department" #department="ngModel" required
+                            [ngModelOptions]="{standalone: true}" />
                         </tui-input>
                       </th>
                       <th *tuiCell="'mail'" tuiTd>
-                        <tui-input formControlName="mail">
-                          <span class="tui-required"></span>
+                        <tui-input>
+                          <input tuiTextfield name="mail{{i}}"
+                            [ngClass]="{'is-invalid': meetingForm.submitted && mail.invalid}" id="mail"
+                            [(ngModel)]="attendees.mail" #mail="ngModel" required
+                            [ngModelOptions]="{standalone: true}" />
                         </tui-input>
-                        <tui-field-error
-                          formControlName="mail"
-                        ></tui-field-error>
                       </th>
                       <th *tuiCell="'phone'" tuiTd>
-                        <tui-input-number formControlName="phone">
-                          <span class="tui-required"></span>
+                        <tui-input-number>
+                          <input tuiTextfield name="phone{{i}}"
+                            [ngClass]="{'is-invalid': meetingForm.submitted && phone.invalid}" id="phone"
+                            [(ngModel)]="attendees.phone" #phone="ngModel" required
+                            [ngModelOptions]="{standalone: true}" />
                         </tui-input-number>
-                      </th>
-                      <th *tuiCell="'actions'" tuiTd>
-                        <button
-                          tuiIconButton
-                          *ngIf="
-                            meetingForm.get('attendees_rows')['controls']
-                              .length > 1
-                          "
-                          (click)="deleteRow('attendees', i)"
-                          appearance="flat"
-                          size="s"
-                          icon="tuiIconTrash"
-                          title="Remove"
-                          shape="rounded"
-                          class="remove"
-                        ></button>
                       </th>
                     </tr>
                   </tbody>
@@ -175,14 +128,8 @@
             <tui-accordion-item>
               <h4>3. Meeting Agenda</h4>
               <ng-template tuiAccordionItemContent>
-                <button
-                  tuiIconButton
-                  type="button"
-                  class="tui-space_bottom-3"
-                  icon="tuiIconPlusCircleLarge"
-                  (click)="addNewRow('agenda')"
-                ></button
-                ><br />
+                <button tuiIconButton type="button" class="tui-space_bottom-3" icon="tuiIconPlusCircleLarge"
+                  (click)="addNewRow('agenda')"></button><br />
                 <table tuiTable [columns]="agenda_columns">
                   <thead tuiThead>
                     <tr tuiThGroup>
@@ -191,48 +138,30 @@
                       <th *tuiHead="'time'" tuiTh [sorter]="null">Time</th>
                     </tr>
                   </thead>
-                  <tbody tuiTbody formArrayName="agenda_rows">
-                    <tr
-                      tuiTr
-                      *ngFor="
-                        let itemrow of meetingForm.get('agenda_rows')[
-                          'controls'
-                        ];
-                        let i = index;
-                        let l = last
-                      "
-                      [formGroupName]="i"
-                    >
+                  <tbody tuiTbody>
+                    <tr tuiTr *ngFor="let agenda of meetingAgenda.agenda; let i=index">
                       <th *tuiCell="'topic'" tuiTd>
-                        <tui-input formControlName="topic">
-                          <span class="tui-required"></span>
+                        <tui-input>
+                          <input tuiTextfield name="topic{{i}}"
+                            [ngClass]="{'is-invalid': meetingForm.submitted && topic.invalid}" id="topic"
+                            [(ngModel)]="agenda.topic" #topic="ngModel" required
+                            [ngModelOptions]="{standalone: true}" />
                         </tui-input>
                       </th>
                       <th *tuiCell="'owner'" tuiTd>
-                        <tui-input formControlName="owner">
-                          <span class="tui-required"></span>
+                        <tui-input>
+                          <input tuiTextfield name="owner{{i}}"
+                            [ngClass]="{'is-invalid': meetingForm.submitted && owner.invalid}" id="owner"
+                            [(ngModel)]="agenda.owner" #owner="ngModel" required
+                            [ngModelOptions]="{standalone: true}" />
                         </tui-input>
                       </th>
                       <th *tuiCell="'time'" tuiTd>
-                        <tui-input formControlName="time">
-                          <span class="tui-required"></span>
+                        <tui-input>
+                          <input tuiTextfield name="time{{i}}"
+                            [ngClass]="{'is-invalid': meetingForm.submitted && time.invalid}" id="time"
+                            [(ngModel)]="agenda.time" #time="ngModel" required [ngModelOptions]="{standalone: true}" />
                         </tui-input>
-                      </th>
-                      <th *tuiCell="'actions'" tuiTd>
-                        <button
-                          tuiIconButton
-                          *ngIf="
-                            meetingForm.get('agenda_rows')['controls'].length >
-                            1
-                          "
-                          (click)="deleteRow('agenda', i)"
-                          appearance="flat"
-                          size="s"
-                          icon="tuiIconTrash"
-                          title="Remove"
-                          shape="rounded"
-                          class="remove"
-                        ></button>
                       </th>
                     </tr>
                   </tbody>
@@ -249,62 +178,32 @@
                 etc.)
               </h4>
               <ng-template tuiAccordionItemContent>
-                <button
-                  tuiIconButton
-                  type="button"
-                  class="tui-space_bottom-3"
-                  icon="tuiIconPlusCircleLarge"
-                  (click)="addNewRow('preparation')"
-                ></button
-                ><br />
+                <button tuiIconButton type="button" class="tui-space_bottom-3" icon="tuiIconPlusCircleLarge"
+                  (click)="addNewRow('preparation')"></button><br />
                 <table tuiTable [columns]="preparation_columns">
                   <thead tuiThead>
                     <tr tuiThGroup>
-                      <th *tuiHead="'description'" tuiTh [sorter]="null">
-                        Description
-                      </th>
-                      <th *tuiHead="'prepared_by'" tuiTh [sorter]="null">
-                        Prepared By
-                      </th>
+                      <th *tuiHead="'description'" tuiTh [sorter]="null">Description</th>
+                      <th *tuiHead="'preparedBy'" tuiTh [sorter]="null">Prepared By</th>
                     </tr>
                   </thead>
-                  <tbody tuiTbody formArrayName="preparation_rows">
-                    <tr
-                      tuiTr
-                      *ngFor="
-                        let itemrow of meetingForm.get('preparation_rows')[
-                          'controls'
-                        ];
-                        let i = index;
-                        let l = last
-                      "
-                      [formGroupName]="i"
-                    >
+                  <tbody tuiTbody>
+                    <tr tuiTr *ngFor="let docs of meetingAgenda.documents; let i=index">
                       <th *tuiCell="'description'" tuiTd>
-                        <tui-input formControlName="description">
-                          <span class="tui-required"></span>
+                        <tui-input>
+                          <input tuiTextfield name="description{{i}}"
+                            [ngClass]="{'is-invalid': meetingForm.submitted && description.invalid}" id="description"
+                            [(ngModel)]="docs.description" #description="ngModel" required
+                            [ngModelOptions]="{standalone: true}" />
                         </tui-input>
                       </th>
-                      <th *tuiCell="'prepared_by'" tuiTd>
-                        <tui-input formControlName="prepared_by">
-                          <span class="tui-required"></span>
+                      <th *tuiCell="'preparedBy'" tuiTd>
+                        <tui-input>
+                          <input tuiTextfield name="preparedBy{{i}}"
+                            [ngClass]="{'is-invalid': meetingForm.submitted && preparedBy.invalid}" id="preparedBy"
+                            [(ngModel)]="docs.preparedBy" #preparedBy="ngModel" required
+                            [ngModelOptions]="{standalone: true}" />
                         </tui-input>
-                      </th>
-                      <th *tuiCell="'actions'" tuiTd>
-                        <button
-                          tuiIconButton
-                          *ngIf="
-                            meetingForm.get('preparation_rows')['controls']
-                              .length > 1
-                          "
-                          (click)="deleteRow('preparation', i)"
-                          appearance="flat"
-                          size="s"
-                          icon="tuiIconTrash"
-                          title="Remove"
-                          shape="rounded"
-                          class="remove"
-                        ></button>
                       </th>
                     </tr>
                   </tbody>

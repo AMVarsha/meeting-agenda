@@ -1,17 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { Component } from '@angular/core';
 import { COLUMNS } from '../constants';
 import { tuiCreateTimePeriods, TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-import { TuiDay } from '@taiga-ui/cdk';
+import { Agenda, Attendees, Documents, Meeting } from '../../columns';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export function maxLengthValidator(context: {
   requiredLength: string;
@@ -42,92 +35,149 @@ export function minLengthValidator(context: {
     }
   ]
 })
-export class MeetingAgendaComponent implements OnInit {
+export class MeetingAgendaComponent {
   readonly details_columns = COLUMNS.details;
   readonly attendees_columns = COLUMNS.attendees;
   readonly agenda_columns = COLUMNS.agenda;
-  readonly preparation_columns = COLUMNS.preparation;
-  meetingForm: FormGroup;
+  readonly preparation_columns = COLUMNS.documents;
   items1 = tuiCreateTimePeriods();
+  meetingAgenda = new Meeting();
 
-  constructor(private formBuilder: FormBuilder) {}
-  ngOnInit(): void {
-    this.initializeForm();
+  generatePdf() {
+    pdfMake.createPdf(this.getDocumentDefinition()).open();
   }
-  initializeForm(): void {
-    this.meetingForm = this.formBuilder.group({
-      meeting_name: ['', Validators.required],
-      dom: new FormControl(new TuiDay(2017, 2, 15)),
-      meeting_facilitator: ['', Validators.required],
-      time: ['', Validators.required],
-      location: ['', Validators.required],
-      objective: ['', [Validators.required, Validators.minLength(5)]],
-      attendees_rows: this.formBuilder.array([this.initAttendeesRows()]),
-      agenda_rows: this.formBuilder.array([this.initAgendaRows()]),
-      preparation_rows: this.formBuilder.array([this.initPreparationRows()])
-    });
-  }
-  get attendeesData(): FormArray {
-    return this.meetingForm.get('attendees_rows') as FormArray;
-  }
-  initAttendeesRows(): AbstractControl {
-    return this.formBuilder.group({
-      name: ['', Validators.required],
-      department: ['', Validators.required],
-      mail: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required]
-    });
-  }
-  initAgendaRows(): AbstractControl {
-    return this.formBuilder.group({
-      topic: ['', Validators.required],
-      owner: ['', Validators.required],
-      time: ['', Validators.required]
-    });
-  }
-  initPreparationRows(): AbstractControl {
-    return this.formBuilder.group({
-      description: ['', [Validators.required, Validators.minLength(5)]],
-      prepared_by: ['', Validators.required]
-    });
-  }
-  get agendaData(): FormArray {
-    return this.meetingForm.get('agenda_rows') as FormArray;
-  }
-  get preparationData(): FormArray {
-    return this.meetingForm.get('preparation_rows') as FormArray;
+
+  getDocumentDefinition() {
+    return {
+      content: [
+        {
+          text: 'Meeting Agenda',
+          bold: true,
+          fontSize: 20,
+          alignment: 'center',
+          margin: [0, 0, 0, 20]
+        },
+        {
+          table: {
+            headerRows: 2,
+            widths: ['*', '*', '*', '*'],
+            body: [
+              [{ text: 'Meeting / Project Name', style: 'tableHeader', colSpan: 2, }, {}, { text: this.meetingAgenda.meetingName, style: 'tableBody', colSpan: 2 }, {}],
+              [{ text: 'Date of Meeting', style: 'tableHeader' }, { text: this.meetingAgenda.dom, style: 'tableBody'}, { text: 'Time', style: 'tableHeader' }, { text: this.meetingAgenda.time, style: 'tableBody'}],
+              [{ text: 'Meeting Facilitator', style: 'tableHeader' }, { text: this.meetingAgenda.facilitator, style: 'tableBody'}, { text: 'Location', style: 'tableHeader'}, { text: this.meetingAgenda.location, style: 'tableBody'}],
+            ]
+          }
+        },
+        {
+          text: '',
+          style: 'sectionHeader'
+        },
+        {
+          table: {
+            widths: '*',
+            body: [
+              [{
+                text: 'Meeting Objective',
+                style: 'tableHeader'
+              }],
+              [{
+                text: this.meetingAgenda.objective,
+                style: 'tableBody'
+              }]
+            ]
+          }
+        },
+        {
+          text: '',
+          style: 'sectionHeader'
+        },
+        {
+          table: {
+            headerRows: 2,
+            widths: ['*', '*', '*', '*'],
+            body: [
+              [{ text: 'Meeting Attendees', style: 'tableHeader', colSpan: 4 }, '', '', ''],
+              ['Name', 'Department', 'Mail', 'Phone'],
+              ...this.meetingAgenda.attendees.map(p => ([p.name, p.department, p.mail, p.phone]))
+            ]
+          }
+        },
+        {
+          text: '',
+          style: 'sectionHeader'
+        },
+        {
+          table: {
+            headerRows: 2,
+            widths: ['*', '*', '*'],
+            body: [
+              [{ text: 'Meeting Agenda', style: 'tableHeader', colSpan: 3 }, '', ''],
+              ['Topic', 'Owner', 'Time'],
+              ...this.meetingAgenda.agenda.map(p => ([p.topic, p.owner, p.time]))
+            ]
+          }
+        },
+        {
+          text: '',
+          style: 'sectionHeader'
+        },
+        {
+          table: {
+            headerRows: 2,
+            widths: ['*', '*'],
+            body: [
+              [{ text: 'Preparation (documents/handouts to bring, reading material etc.)', style: 'tableHeader', colSpan: 2 }, ''],
+              ['Description', 'Prepared By'],
+              ...this.meetingAgenda.documents.map(p => ([p.description, p.preparedBy]))
+            ]
+          }
+        },
+      ],
+      defaultStyle: {
+        alignment: 'justify'
+      },
+      info: {
+        title: this.meetingAgenda.meetingName + '_MEETING MINUTES',
+        author: this.meetingAgenda.meetingName,
+        subject: 'MOM',
+        keywords: 'MOM',
+      },
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 20, 0, 10],
+        },
+        sectionHeader: {
+          bold: true,
+          fontSize: 14,
+          margin: [0, 15, 0, 15]
+        },
+        name: {
+          fontSize: 16,
+          bold: true
+        },
+        tableHeader: {
+          margin: [0, 8],
+          fontSize: 14,
+          color: '#ff7043',
+          bold: true,
+        },
+        tableBody: {
+          margin: [0, 8],
+          fontSize: 12,
+        }
+      }
+    };
   }
 
   addNewRow(data: string): void {
     if (data === 'attendees') {
-      this.attendeesData.push(this.initAttendeesRows());
+      this.meetingAgenda.attendees.push(new Attendees());
     } else if (data === 'agenda') {
-      this.agendaData.push(this.initAgendaRows());
+      this.meetingAgenda.agenda.push(new Agenda());
     } else if (data === 'preparation') {
-      this.preparationData.push(this.initPreparationRows());
+      this.meetingAgenda.documents.push(new Documents());
     }
-  }
-
-  deleteRow(data: string, index: number) {
-    if (data === 'attendees') {
-      this.attendeesData.removeAt(index);
-    } else if (data === 'agenda') {
-      this.agendaData.removeAt(index);
-    } else if (data === 'preparation') {
-      this.preparationData.removeAt(index);
-    }
-  }
-
-  openPDF(): void {
-    let DATA: any = document.getElementById('htmlData');
-    html2canvas(DATA).then((canvas) => {
-      let fileWidth = 208;
-      let fileHeight = (canvas.height * fileWidth) / canvas.width;
-      const FILEURI = canvas.toDataURL('image/png');
-      let PDF = new jsPDF('p', 'mm', 'a4');
-      let position = 0;
-      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-      PDF.save('mom.pdf');
-    });
   }
 }
