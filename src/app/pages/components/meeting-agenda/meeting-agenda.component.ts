@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { COLUMNS } from '../constants';
-import { tuiCreateTimePeriods, TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
+import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 import { Agenda, Attendees, Documents, Meeting } from '../../columns';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -40,11 +40,10 @@ export class MeetingAgendaComponent {
   readonly attendees_columns = COLUMNS.attendees;
   readonly agenda_columns = COLUMNS.agenda;
   readonly preparation_columns = COLUMNS.documents;
-  items1 = tuiCreateTimePeriods();
   meetingAgenda = new Meeting();
 
   generatePdf() {
-    pdfMake.createPdf(this.getDocumentDefinition()).open();
+    pdfMake.createPdf(this.getDocumentDefinition()).download();
   }
 
   getDocumentDefinition() {
@@ -129,7 +128,7 @@ export class MeetingAgendaComponent {
                 '',
                 ''
               ],
-              ['Name', 'Department', 'Mail', 'Phone'],
+              [{ text: 'Name', style: 'sectionHeader'}, { text: 'Department', style: 'sectionHeader'}, { text: 'Mail', style: 'sectionHeader'}, { text: 'Phone', style: 'sectionHeader'}],
               ...this.meetingAgenda.attendees.map((p) => [
                 p.name,
                 p.department,
@@ -153,7 +152,7 @@ export class MeetingAgendaComponent {
                 '',
                 ''
               ],
-              ['Topic', 'Owner', 'Time'],
+              [{ text: 'Topic', style: 'sectionHeader'}, { text: 'Owner', style: 'sectionHeader'}, { text: 'Time', style: 'sectionHeader'}],
               ...this.meetingAgenda.agenda.map((p) => [
                 p.topic,
                 p.owner,
@@ -179,7 +178,7 @@ export class MeetingAgendaComponent {
                 },
                 ''
               ],
-              ['Description', 'Prepared By'],
+              [{ text: 'Description', style: 'sectionHeader'}, { text: 'Prepared By', style: 'sectionHeader'}],
               ...this.meetingAgenda.documents.map((p) => [
                 p.description,
                 p.preparedBy
@@ -206,7 +205,7 @@ export class MeetingAgendaComponent {
         sectionHeader: {
           bold: true,
           fontSize: 14,
-          margin: [0, 15, 0, 15]
+          margin: [0, 8]
         },
         name: {
           fontSize: 16,

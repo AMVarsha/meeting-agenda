@@ -28,13 +28,13 @@
             </div>
             <div class="tui-form__multi-field">
               <label tuiLabel label="Date of Meeting">
-                <tui-input-date
+                <tui-input
                   tuiTextfieldSize="m"
                   tuiTextfieldLabelOutside="true"
                   [(ngModel)]="meetingAgenda.dom"
                   [ngModelOptions]="{ standalone: true }"
                 >
-                </tui-input-date>
+                </tui-input>
               </label>
             </div>
           </div>
@@ -52,13 +52,11 @@
             </div>
             <div class="tui-form__multi-field">
               <label tuiLabel label="Time">
-                <tui-input-time
-                  [items]="items1"
+                <tui-input
                   [(ngModel)]="meetingAgenda.time"
                   [ngModelOptions]="{ standalone: true }"
                 >
-                  Input time
-                </tui-input-time>
+                </tui-input>
               </label>
             </div>
             <div class="tui-form__multi-field">
