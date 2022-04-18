@@ -128,7 +128,12 @@ export class MeetingAgendaComponent {
                 '',
                 ''
               ],
-              [{ text: 'Name', style: 'sectionHeader'}, { text: 'Department', style: 'sectionHeader'}, { text: 'Mail', style: 'sectionHeader'}, { text: 'Phone', style: 'sectionHeader'}],
+              [
+                { text: 'Name', style: 'sectionHeader' },
+                { text: 'Department', style: 'sectionHeader' },
+                { text: 'Mail', style: 'sectionHeader' },
+                { text: 'Phone', style: 'sectionHeader' }
+              ],
               ...this.meetingAgenda.attendees.map((p) => [
                 p.name,
                 p.department,
@@ -152,7 +157,11 @@ export class MeetingAgendaComponent {
                 '',
                 ''
               ],
-              [{ text: 'Topic', style: 'sectionHeader'}, { text: 'Owner', style: 'sectionHeader'}, { text: 'Time', style: 'sectionHeader'}],
+              [
+                { text: 'Topic', style: 'sectionHeader' },
+                { text: 'Owner', style: 'sectionHeader' },
+                { text: 'Time', style: 'sectionHeader' }
+              ],
               ...this.meetingAgenda.agenda.map((p) => [
                 p.topic,
                 p.owner,
@@ -178,7 +187,10 @@ export class MeetingAgendaComponent {
                 },
                 ''
               ],
-              [{ text: 'Description', style: 'sectionHeader'}, { text: 'Prepared By', style: 'sectionHeader'}],
+              [
+                { text: 'Description', style: 'sectionHeader' },
+                { text: 'Prepared By', style: 'sectionHeader' }
+              ],
               ...this.meetingAgenda.documents.map((p) => [
                 p.description,
                 p.preparedBy
