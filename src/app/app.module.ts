@@ -9,12 +9,13 @@ import {
   TuiSvgModule,
   iconsPathFactory,
   TuiButtonModule,
-  TuiLabelModule
+  TuiLabelModule,
+  TuiDialogModule
 } from '@taiga-ui/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MeetingAgendaComponent } from './pages/components/meeting-agenda/meeting-agenda.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import {
   TuiAccordionModule,
   TuiFieldErrorModule,
@@ -27,6 +28,7 @@ import {
 } from '@taiga-ui/kit';
 import { CommonModule } from '@angular/common';
 import { TuiOverscrollModule } from '@taiga-ui/cdk';
+import { PolymorpheusModule } from '@tinkoff/ng-polymorpheus';
 
 @NgModule({
   declarations: [AppComponent, MeetingAgendaComponent],
@@ -35,7 +37,6 @@ import { TuiOverscrollModule } from '@taiga-ui/cdk';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    ReactiveFormsModule,
     TuiRootModule,
     TuiTableModule,
     TuiAccordionModule,
@@ -43,7 +44,6 @@ import { TuiOverscrollModule } from '@taiga-ui/cdk';
     TuiInputModule,
     TuiTextAreaModule,
     TuiScrollbarModule,
-    ReactiveFormsModule,
     FormsModule,
     TuiFieldErrorModule,
     TuiButtonModule,
@@ -52,7 +52,9 @@ import { TuiOverscrollModule } from '@taiga-ui/cdk';
     TuiLabelModule,
     TuiInputDateModule,
     TuiInputTimeModule,
-    TuiInputPhoneModule
+    TuiInputPhoneModule,
+    TuiDialogModule,
+    PolymorpheusModule
   ],
   providers: [
     {
