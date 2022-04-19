@@ -44,7 +44,7 @@ export class MeetingAgendaComponent {
   readonly preparation_columns = COLUMNS.documents;
   meetingAgenda = new Meeting();
   isDelete: boolean = true;
-  constructor(private dialogService: TuiDialogService) { }
+  constructor(private dialogService: TuiDialogService) {}
   generatePdf() {
     pdfMake.createPdf(this.getDocumentDefinition()).download();
   }
@@ -252,7 +252,9 @@ export class MeetingAgendaComponent {
 
   deleteRow(data: any, index: number) {
     if (data.constructor.name === 'Attendees') {
-      Object.keys(data).length == 0 ? this.meetingAgenda.attendees.splice(index, 1) : this.isDelete = true;
+      Object.keys(data).length == 0
+        ? this.meetingAgenda.attendees.splice(index, 1)
+        : (this.isDelete = true);
     } else if (data === 'agenda') {
       this.meetingAgenda.agenda.push(new Agenda());
     } else if (data === 'preparation') {
