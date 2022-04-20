@@ -43,7 +43,7 @@ export class MeetingAgendaComponent {
   readonly preparation_columns = COLUMNS.documents;
   meetingAgenda = new Meeting();
 
-  constructor(private dialogService: TuiDialogService) { }
+  constructor(private dialogService: TuiDialogService) {}
   generatePdf() {
     pdfMake.createPdf(this.getDocumentDefinition()).open();
   }
@@ -262,7 +262,10 @@ export class MeetingAgendaComponent {
   }
   showDialog() {
     this.dialogService
-      .open('Are you sure want to delete?', { label: 'Confirm Delete', size: 's' })
+      .open('Are you sure want to delete?', {
+        label: 'Confirm Delete',
+        size: 's'
+      })
       .subscribe();
   }
 }

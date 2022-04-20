@@ -5,21 +5,41 @@
       <form #meetingForm="ngForm">
         <div class="row">
           <div class="tui-container">
-            <button tuiButton type="button" appearance="accent" class="tui-space_right-3 tui-space_bottom-3"
-              icon="tuiIconDownloadLarge" [disabled]="!meetingForm.valid" (click)="generatePdf()">
-              Download as PDF</button><br /><br /><br />
+            <button
+              tuiButton
+              type="button"
+              appearance="accent"
+              class="tui-space_right-3 tui-space_bottom-3"
+              icon="tuiIconDownloadLarge"
+              [disabled]="!meetingForm.valid"
+              (click)="generatePdf()"
+            >
+              Download as PDF</button
+            ><br /><br /><br />
             <div class="tui-form__row tui-form__row_multi-fields">
               <div class="tui-form__multi-field">
                 <label tuiLabel label="Meeting / Project Name">
-                  <tui-input tuiTextfieldSize="m" id="meetingName" class="form-control"
-                    [(ngModel)]="meetingAgenda.meetingName" name="meetingName" required>
+                  <tui-input
+                    tuiTextfieldSize="m"
+                    id="meetingName"
+                    class="form-control"
+                    [(ngModel)]="meetingAgenda.meetingName"
+                    name="meetingName"
+                    required
+                  >
                   </tui-input>
                 </label>
               </div>
               <div class="tui-form__multi-field">
                 <label tuiLabel label="Date of Meeting">
-                  <tui-input-date tuiTextfieldSize="m" id="dom" class="form-control" [(ngModel)]="meetingAgenda.dom"
-                    name="dom" required>
+                  <tui-input-date
+                    tuiTextfieldSize="m"
+                    id="dom"
+                    class="form-control"
+                    [(ngModel)]="meetingAgenda.dom"
+                    name="dom"
+                    required
+                  >
                   </tui-input-date>
                 </label>
               </div>
@@ -27,19 +47,34 @@
             <div class="tui-form__row tui-form__row_multi-fields">
               <div class="tui-form__multi-field">
                 <label tuiLabel label="Meeting Facilitator">
-                  <tui-input tuiTextfieldSize="m" name="facilitator" [(ngModel)]="meetingAgenda.facilitator" required>
+                  <tui-input
+                    tuiTextfieldSize="m"
+                    name="facilitator"
+                    [(ngModel)]="meetingAgenda.facilitator"
+                    required
+                  >
                   </tui-input>
                 </label>
               </div>
               <div class="tui-form__multi-field">
                 <label tuiLabel label="Time">
-                  <tui-input tuiTextfieldSize="m" name="time" [(ngModel)]="meetingAgenda.time" required>
+                  <tui-input
+                    tuiTextfieldSize="m"
+                    name="time"
+                    [(ngModel)]="meetingAgenda.time"
+                    required
+                  >
                   </tui-input>
                 </label>
               </div>
               <div class="tui-form__multi-field">
                 <label tuiLabel label="Location">
-                  <tui-input tuiTextfieldSize="m" name="location" [(ngModel)]="meetingAgenda.location" required>
+                  <tui-input
+                    tuiTextfieldSize="m"
+                    name="location"
+                    [(ngModel)]="meetingAgenda.location"
+                    required
+                  >
                   </tui-input>
                 </label>
               </div>
@@ -48,15 +83,25 @@
           <div class="tui-container">
             <div class="tui-col-12">
               <h3>1. Meeting Objective</h3>
-              <tui-text-area name="objective" [(ngModel)]="meetingAgenda.objective" required>
+              <tui-text-area
+                name="objective"
+                [(ngModel)]="meetingAgenda.objective"
+                required
+              >
               </tui-text-area>
               <tui-field-error></tui-field-error>
             </div>
           </div>
           <div class="tui-container">
             <h3>2. Attendees</h3>
-            <tui-svg src="tuiIconPlusCircleLarge" class="icon" (click)="addNewRow('attendees')" class="add-row">
-            </tui-svg><br /><br />
+            <tui-svg
+              src="tuiIconPlusCircleLarge"
+              class="icon"
+              (click)="addNewRow('attendees')"
+              class="add-row"
+            >
+            </tui-svg
+            ><br /><br />
             <table tuiTable [columns]="attendees_columns" class="table">
               <thead tuiThead>
                 <tr tuiThGroup>
@@ -68,34 +113,55 @@
                   </th>
                   <th *tuiHead="'mail'" tuiTh [sorter]="null">E-mail</th>
                   <th *tuiHead="'phone'" tuiTh [sorter]="null">Phone</th>
-                  <th *tuiHead="'actions'" tuiTh [sorter]="null">
-                    Actions
-                  </th>
+                  <th *tuiHead="'actions'" tuiTh [sorter]="null">Actions</th>
                 </tr>
               </thead>
               <tbody tuiTbody>
-                <tr tuiTr *ngFor="
-                          let attendees of meetingAgenda.attendees;
-                          let i = index
-                        ">
+                <tr
+                  tuiTr
+                  *ngFor="
+                    let attendees of meetingAgenda.attendees;
+                    let i = index
+                  "
+                >
                   <th *tuiCell="'name'" tuiTd>
-                    <tui-input name="name{{ i }}" [(ngModel)]="attendees.name" required>
+                    <tui-input
+                      name="name{{ i }}"
+                      [(ngModel)]="attendees.name"
+                      required
+                    >
                     </tui-input>
                   </th>
                   <th *tuiCell="'department'" tuiTd>
-                    <tui-input name="department{{ i }}" [(ngModel)]="attendees.department" required>
+                    <tui-input
+                      name="department{{ i }}"
+                      [(ngModel)]="attendees.department"
+                      required
+                    >
                     </tui-input>
                   </th>
                   <th *tuiCell="'mail'" tuiTd>
-                    <tui-input name="mail{{ i }}" [(ngModel)]="attendees.mail" required>
+                    <tui-input
+                      name="mail{{ i }}"
+                      [(ngModel)]="attendees.mail"
+                      required
+                    >
                     </tui-input>
                   </th>
                   <th *tuiCell="'phone'" tuiTd>
-                    <tui-input-number name="phone{{ i }}" [(ngModel)]="attendees.phone" required>
+                    <tui-input-number
+                      name="phone{{ i }}"
+                      [(ngModel)]="attendees.phone"
+                      required
+                    >
                     </tui-input-number>
                   </th>
                   <th *tuiCell="'actions'" tuiTd>
-                    <tui-svg src="tuiIconTrashLarge" class="icon" (click)="deleteRow(attendees, i)"></tui-svg>
+                    <tui-svg
+                      src="tuiIconTrashLarge"
+                      class="icon"
+                      (click)="deleteRow(attendees, i)"
+                    ></tui-svg>
                   </th>
                 </tr>
               </tbody>
@@ -103,44 +169,76 @@
           </div>
           <div class="tui-container">
             <h3>3. Meeting Agenda</h3>
-            <tui-svg src="tuiIconPlusCircleLarge" class="icon" (click)="addNewRow('agenda')" class="add-row">
-            </tui-svg><br /><br />
+            <tui-svg
+              src="tuiIconPlusCircleLarge"
+              class="icon"
+              (click)="addNewRow('agenda')"
+              class="add-row"
+            >
+            </tui-svg
+            ><br /><br />
             <table tuiTable [columns]="agenda_columns">
               <thead tuiThead>
                 <tr tuiThGroup>
                   <th *tuiHead="'topic'" tuiTh [sorter]="null">Topic</th>
                   <th *tuiHead="'owner'" tuiTh [sorter]="null">Owner</th>
                   <th *tuiHead="'time'" tuiTh [sorter]="null">Time</th>
-                  <th *tuiHead="'actions'" tuiTh [sorter]="null">
-                    Actions
-                  </th>
+                  <th *tuiHead="'actions'" tuiTh [sorter]="null">Actions</th>
                 </tr>
               </thead>
               <tbody tuiTbody>
-                <tr tuiTr *ngFor="let agenda of meetingAgenda.agenda; let i = index">
+                <tr
+                  tuiTr
+                  *ngFor="let agenda of meetingAgenda.agenda; let i = index"
+                >
                   <th *tuiCell="'topic'" tuiTd>
-                    <tui-input name="topic{{ i }}" [(ngModel)]="agenda.topic" required>
+                    <tui-input
+                      name="topic{{ i }}"
+                      [(ngModel)]="agenda.topic"
+                      required
+                    >
                     </tui-input>
                   </th>
                   <th *tuiCell="'owner'" tuiTd>
-                    <tui-input name="owner{{ i }}" [(ngModel)]="agenda.owner" required>
+                    <tui-input
+                      name="owner{{ i }}"
+                      [(ngModel)]="agenda.owner"
+                      required
+                    >
                     </tui-input>
                   </th>
                   <th *tuiCell="'time'" tuiTd>
-                    <tui-input name="time{{ i }}" [(ngModel)]="agenda.time" required>
+                    <tui-input
+                      name="time{{ i }}"
+                      [(ngModel)]="agenda.time"
+                      required
+                    >
                     </tui-input>
                   </th>
                   <th *tuiCell="'actions'" tuiTd>
-                    <tui-svg src="tuiIconTrashLarge" class="icon" (click)="deleteRow(agenda, i)"></tui-svg>
+                    <tui-svg
+                      src="tuiIconTrashLarge"
+                      class="icon"
+                      (click)="deleteRow(agenda, i)"
+                    ></tui-svg>
                   </th>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="tui-container">
-            <h3>4. Preparation (documents/handouts to bring, reading material etc.)</h3>
-            <tui-svg src="tuiIconPlusCircleLarge" class="icon" (click)="addNewRow('preparation')" class="add-row">
-            </tui-svg><br /><br />
+            <h3>
+              4. Preparation (documents/handouts to bring, reading material
+              etc.)
+            </h3>
+            <tui-svg
+              src="tuiIconPlusCircleLarge"
+              class="icon"
+              (click)="addNewRow('preparation')"
+              class="add-row"
+            >
+            </tui-svg
+            ><br /><br />
             <table tuiTable [columns]="preparation_columns">
               <thead tuiThead>
                 <tr tuiThGroup>
@@ -150,26 +248,36 @@
                   <th *tuiHead="'preparedBy'" tuiTh [sorter]="null">
                     Prepared By
                   </th>
-                  <th *tuiHead="'actions'" tuiTh [sorter]="null">
-                    Actions
-                  </th>
+                  <th *tuiHead="'actions'" tuiTh [sorter]="null">Actions</th>
                 </tr>
               </thead>
               <tbody tuiTbody>
-                <tr tuiTr *ngFor="
-                    let docs of meetingAgenda.documents;
-                    let i = index
-                  ">
+                <tr
+                  tuiTr
+                  *ngFor="let docs of meetingAgenda.documents; let i = index"
+                >
                   <th *tuiCell="'description'" tuiTd>
-                    <tui-input name="description{{ i }}" [(ngModel)]="docs.description" required>
+                    <tui-input
+                      name="description{{ i }}"
+                      [(ngModel)]="docs.description"
+                      required
+                    >
                     </tui-input>
                   </th>
                   <th *tuiCell="'preparedBy'" tuiTd>
-                    <tui-input name="preparedBy{{ i }}" [(ngModel)]="docs.preparedBy" required>
+                    <tui-input
+                      name="preparedBy{{ i }}"
+                      [(ngModel)]="docs.preparedBy"
+                      required
+                    >
                     </tui-input>
                   </th>
                   <th *tuiCell="'actions'" tuiTd>
-                    <tui-svg src="tuiIconTrashLarge" class="icon" (click)="deleteRow(docs, i)"></tui-svg>
+                    <tui-svg
+                      src="tuiIconTrashLarge"
+                      class="icon"
+                      (click)="deleteRow(docs, i)"
+                    ></tui-svg>
                   </th>
                 </tr>
               </tbody>
