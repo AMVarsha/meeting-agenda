@@ -53,8 +53,7 @@ import { PolymorpheusModule } from '@tinkoff/ng-polymorpheus';
     TuiInputDateModule,
     TuiInputTimeModule,
     TuiInputPhoneModule,
-    TuiDialogModule,
-    PolymorpheusModule
+    TuiDialogModule
   ],
   providers: [
     {

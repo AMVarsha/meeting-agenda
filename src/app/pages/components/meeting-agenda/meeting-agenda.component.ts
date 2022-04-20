@@ -4,8 +4,7 @@ import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 import { Agenda, Attendees, Documents, Meeting } from '../../columns';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
-import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
+import { TuiDialogService } from '@taiga-ui/core';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export function maxLengthValidator(context: {
@@ -43,10 +42,10 @@ export class MeetingAgendaComponent {
   readonly agenda_columns = COLUMNS.agenda;
   readonly preparation_columns = COLUMNS.documents;
   meetingAgenda = new Meeting();
-  isDelete: boolean = true;
-  constructor(private dialogService: TuiDialogService) {}
+
+  constructor(private dialogService: TuiDialogService) { }
   generatePdf() {
-    pdfMake.createPdf(this.getDocumentDefinition()).download();
+    pdfMake.createPdf(this.getDocumentDefinition()).open();
   }
 
   getDocumentDefinition() {
@@ -254,18 +253,16 @@ export class MeetingAgendaComponent {
     if (data.constructor.name === 'Attendees') {
       Object.keys(data).length == 0
         ? this.meetingAgenda.attendees.splice(index, 1)
-        : (this.isDelete = true);
+        : this.showDialog();
     } else if (data === 'agenda') {
       this.meetingAgenda.agenda.push(new Agenda());
     } else if (data === 'preparation') {
       this.meetingAgenda.documents.push(new Documents());
     }
   }
-  showDialog(content: PolymorpheusContent<TuiDialogContext>) {
-    this.dialogService.open(content).subscribe();
-  }
-
-  withdraw() {
-    // this.money -= 100;
+  showDialog() {
+    this.dialogService
+      .open('Are you sure want to delete?', { label: 'Confirm Delete', size: 's' })
+      .subscribe();
   }
 }
