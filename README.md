@@ -27,6 +27,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 ## TAIGAUI installation
+
 ========================
 
 You can easily install Taiga UI using Angular CLI by running the following command:
@@ -35,36 +36,36 @@ ng add taiga-ui
 Use this guide to install Taiga UI manually:
 
 1. Install packages of Taiga UI
-Main Taiga UI packages
+   Main Taiga UI packages
 
 npm i @taiga-ui/cdk,
-npm i @taiga-ui/core, 
+npm i @taiga-ui/core,
 npm i @taiga-ui/kit,
 npm i @taiga-ui/icons
 
-npm i @taiga-ui/addon-mobile     // Components and tools specific to mobile version of the app
-npm i @taiga-ui/addon-table     // Interactive table component and related utilities
+npm i @taiga-ui/addon-mobile // Components and tools specific to mobile version of the app
+npm i @taiga-ui/addon-table // Interactive table component and related utilities
 
 2. Add theme and Taiga UI global styles to your angular.json :
 
 angular.json
 
 {
-  "projects": {
-    "your-app": {
-      "architect": {
-        "build": {
-          "options": {
-            "styles": [
-              "node_modules/@taiga-ui/core/styles/taiga-ui-global.less",
-              "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less"
-              "src/styles.css",
-            ]
-          }
-        }
-      }
-    }
-  }
+"projects": {
+"your-app": {
+"architect": {
+"build": {
+"options": {
+"styles": [
+"node_modules/@taiga-ui/core/styles/taiga-ui-global.less",
+"node_modules/@taiga-ui/core/styles/taiga-ui-theme.less"
+"src/styles.css",
+]
+}
+}
+}
+}
+}
 }
 
 my.component.less / my.component.scss
@@ -78,25 +79,27 @@ my.component.less / my.component.scss
 angular.json
 
 "assets": [
-    {
-        "glob": "**/*",
-        "input": "node_modules/@taiga-ui/icons/src",
-        "output": "assets/taiga-ui/icons"
-    }
+{
+"glob": "**/*",
+"input": "node_modules/@taiga-ui/icons/src",
+"output": "assets/taiga-ui/icons"
+}
 ],
 
 ## PDFMAKE installation
+
 =======================
 
 You can install pdfmake in your application using this command.
 npm i pdfmake
- 
+
 In your component import this packages
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 
 ## ESLint installation
+
 ======================
 
 Install ESLint by using the following command in your project.
