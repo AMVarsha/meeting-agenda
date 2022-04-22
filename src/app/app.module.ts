@@ -28,7 +28,6 @@ import {
 } from '@taiga-ui/kit';
 import { CommonModule } from '@angular/common';
 import { TuiOverscrollModule } from '@taiga-ui/cdk';
-import { PolymorpheusModule } from '@tinkoff/ng-polymorpheus';
 
 @NgModule({
   declarations: [AppComponent, MeetingAgendaComponent],
