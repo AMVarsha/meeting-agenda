@@ -162,8 +162,7 @@ export class MeetingAgendaComponent {
                   text: 'Preparation (documents/handouts to bring, reading material etc.)',
                   style: 'tableHeader',
                   colSpan: 2
-                },
-                ''
+                }
               ],
               [
                 { text: 'Description', style: 'sectionHeader' },
@@ -195,6 +194,7 @@ export class MeetingAgendaComponent {
         sectionHeader: {
           bold: true,
           fontSize: 14,
+          color: '#CAA23C',
           margin: [0, 8]
         },
         name: {
@@ -204,7 +204,7 @@ export class MeetingAgendaComponent {
         tableHeader: {
           margin: [0, 8],
           fontSize: 14,
-          color: '#ff7043',
+          color: '#235185',
           bold: true
         },
         tableBody: {

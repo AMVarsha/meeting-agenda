@@ -136,7 +136,6 @@
               </td>
               <td *tuiCell="'mail'" tuiTd>
                 <tui-input
-                  type="text"
                   class="form-control"
                   [(ngModel)]="attendees.mail"
                   name="mail{{ i }}"
@@ -208,12 +207,12 @@
               *ngFor="let agenda of meetingAgenda.agenda; let i = index"
             >
               <td *tuiCell="'topic'" tuiTd>
-                <tui-input
+                <tui-text-area
                   name="topic{{ i }}"
                   [(ngModel)]="agenda.topic"
                   required
                 >
-                </tui-input>
+                </tui-text-area>
               </td>
               <td *tuiCell="'owner'" tuiTd>
                 <tui-input
@@ -270,20 +269,20 @@
               *ngFor="let docs of meetingAgenda.documents; let i = index"
             >
               <td *tuiCell="'description'" tuiTd>
-                <tui-input
+                <tui-text-area
                   name="description{{ i }}"
                   [(ngModel)]="docs.description"
                   required
                 >
-                </tui-input>
+                </tui-text-area>
               </td>
               <td *tuiCell="'preparedBy'" tuiTd>
-                <tui-input
+                <tui-text-area
                   name="preparedBy{{ i }}"
                   [(ngModel)]="docs.preparedBy"
                   required
                 >
-                </tui-input>
+                </tui-text-area>
               </td>
               <td *tuiCell="'actions'" tuiTd>
                 <tui-svg
