@@ -1,40 +1,15 @@
 import { Component } from '@angular/core';
 import { COLUMNS } from '../constants';
-import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 import { Agenda, Attendees, Documents, Meeting } from '../../columns';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TuiDialogService } from '@taiga-ui/core';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-export function maxLengthValidator(context: {
-  requiredLength: string;
-}): string {
-  return `Maximum length — ${context.requiredLength} is required`;
-}
-
-export function minLengthValidator(context: {
-  requiredLength: string;
-}): string {
-  return `Minimum length — ${context.requiredLength} is required`;
-}
-
 @Component({
   selector: 'app-meeting-agenda',
   templateUrl: './meeting-agenda.component.html',
-  styleUrls: ['./meeting-agenda.component.scss'],
-  providers: [
-    {
-      provide: TUI_VALIDATION_ERRORS,
-      useValue: {
-        required: 'Enter this!',
-        email: 'Enter a valid email',
-        phone: 'Enter a valid mobile',
-        maxlength: maxLengthValidator,
-        minlength: minLengthValidator
-      }
-    }
-  ]
+  styleUrls: ['./meeting-agenda.component.scss']
 })
 export class MeetingAgendaComponent {
   readonly details_columns = COLUMNS.details;
