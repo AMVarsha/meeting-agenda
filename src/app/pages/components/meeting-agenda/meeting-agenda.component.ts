@@ -3,7 +3,7 @@ import { COLUMNS } from '../constants';
 import { Agenda, Attendees, Documents, Meeting } from '../../columns';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { TuiDialogService } from '@taiga-ui/core';
+import { TuiCountryIsoCode } from '@taiga-ui/i18n';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -17,9 +17,10 @@ export class MeetingAgendaComponent {
   readonly agenda_columns = COLUMNS.agenda;
   readonly preparation_columns = COLUMNS.documents;
   meetingAgenda = new Meeting();
+  readonly countries = Object.values(TuiCountryIsoCode);
+  countryIsoCode = TuiCountryIsoCode.IN;
 
-  constructor(private dialogService: TuiDialogService) {}
-  generatePdf() {
+  generatePdf(): void {
     pdfMake.createPdf(this.getDocumentDefinition()).open();
   }
 
@@ -226,21 +227,11 @@ export class MeetingAgendaComponent {
 
   deleteRow(data: any, index: number) {
     if (data.constructor.name === 'Attendees') {
-      Object.keys(data).length == 0
-        ? this.meetingAgenda.attendees.splice(index, 1)
-        : this.showDialog();
+      this.meetingAgenda.attendees.splice(index, 1);
     } else if (data === 'agenda') {
-      this.meetingAgenda.agenda.push(new Agenda());
+      this.meetingAgenda.agenda.splice(index, 1);
     } else if (data === 'preparation') {
-      this.meetingAgenda.documents.push(new Documents());
+      this.meetingAgenda.documents.splice(index, 1);
     }
-  }
-  showDialog() {
-    this.dialogService
-      .open('Are you sure want to delete?', {
-        label: 'Confirm Delete',
-        size: 's'
-      })
-      .subscribe();
   }
 }

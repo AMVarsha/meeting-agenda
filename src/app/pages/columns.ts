@@ -1,6 +1,6 @@
 export class Meeting {
   meetingName: string;
-  dom: string;
+  dom: Date;
   facilitator: string;
   time: number;
   location: string;
