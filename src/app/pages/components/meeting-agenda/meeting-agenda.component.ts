@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { COLUMNS } from '../constants';
-import { Agenda, Attendees, Documents, Meeting } from '../../columns';
+import { Component, OnInit } from '@angular/core';
+import { COLUMNS, REGEX_PATTERNS } from '../constants';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TuiCountryIsoCode } from '@taiga-ui/i18n';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TuiDay } from '@taiga-ui/cdk';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -11,14 +12,74 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   templateUrl: './meeting-agenda.component.html',
   styleUrls: ['./meeting-agenda.component.scss']
 })
-export class MeetingAgendaComponent {
-  readonly details_columns = COLUMNS.details;
+export class MeetingAgendaComponent implements OnInit {
   readonly attendees_columns = COLUMNS.attendees;
   readonly agenda_columns = COLUMNS.agenda;
   readonly preparation_columns = COLUMNS.documents;
-  meetingAgenda = new Meeting();
   readonly countries = Object.values(TuiCountryIsoCode);
   countryIsoCode = TuiCountryIsoCode.IN;
+
+  meetingForm: FormGroup;
+  control: FormArray;
+  constructor(private formBuilder: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.meetingForm = this.formBuilder.group({
+      projectName: ['', Validators.required],
+      dom: [new TuiDay(2022, 4, 25), Validators.required],
+      facilitator: ['', Validators.required],
+      time: ['', Validators.required],
+      location: ['', Validators.required],
+      objective: ['', Validators.required],
+      attendeesRows: this.formBuilder.array([this.attendeesInitiateForm()]),
+      agendaRows: this.formBuilder.array([this.agendaInitiateForm()]),
+      preparationRows: this.formBuilder.array([this.preparationInitiateForm()])
+    });
+  }
+
+  attendeesInitiateForm(): FormGroup {
+    return this.formBuilder.group({
+      name: ['', Validators.required],
+      department: ['', [Validators.required]],
+      mail: ['', Validators.required, Validators.pattern(REGEX_PATTERNS.email)],
+      phone: ['', [Validators.required]]
+    });
+  }
+  agendaInitiateForm(): FormGroup {
+    return this.formBuilder.group({
+      topic: ['', Validators.required],
+      owner: ['', [Validators.required]],
+      time: ['', [Validators.required]]
+    });
+  }
+  preparationInitiateForm(): FormGroup {
+    return this.formBuilder.group({
+      description: ['', Validators.required],
+      preparedBy: ['', [Validators.required]]
+    });
+  }
+  get getAttendeesFormControls() {
+    return this.meetingForm.get('attendeesRows') as FormArray;
+  }
+  get getAgendaFormControls() {
+    return this.meetingForm.get('agendaRows') as FormArray;
+  }
+  get getPreparationFormControls() {
+    return this.meetingForm.get('preparationRows') as FormArray;
+  }
+
+  addNewRow(data: string): void {
+    if (data === 'attendees') {
+      const control = this.meetingForm.get('attendeesRows') as FormArray;
+      control.push(this.attendeesInitiateForm());
+    } else if (data === 'agenda') {
+      const control = this.meetingForm.get('agendaRows') as FormArray;
+      control.push(this.agendaInitiateForm());
+    } else if (data === 'preparation') {
+      const control = this.meetingForm.get('preparationRows') as FormArray;
+      control.push(this.preparationInitiateForm());
+    }
+  }
 
   generatePdf(): void {
     pdfMake.createPdf(this.getDocumentDefinition()).open();
@@ -47,7 +108,7 @@ export class MeetingAgendaComponent {
                 },
                 {},
                 {
-                  text: this.meetingAgenda.meetingName,
+                  text: this.meetingForm.value.projectName,
                   style: 'tableBody',
                   colSpan: 2
                 },
@@ -55,15 +116,15 @@ export class MeetingAgendaComponent {
               ],
               [
                 { text: 'Date of Meeting', style: 'tableHeader' },
-                { text: this.meetingAgenda.dom, style: 'tableBody' },
+                { text: this.meetingForm.value.dom, style: 'tableBody' },
                 { text: 'Time', style: 'tableHeader' },
-                { text: this.meetingAgenda.time, style: 'tableBody' }
+                { text: this.meetingForm.value.time, style: 'tableBody' }
               ],
               [
                 { text: 'Meeting Facilitator', style: 'tableHeader' },
-                { text: this.meetingAgenda.facilitator, style: 'tableBody' },
+                { text: this.meetingForm.value.facilitator, style: 'tableBody' },
                 { text: 'Location', style: 'tableHeader' },
-                { text: this.meetingAgenda.location, style: 'tableBody' }
+                { text: this.meetingForm.value.location, style: 'tableBody' }
               ]
             ]
           }
@@ -84,7 +145,7 @@ export class MeetingAgendaComponent {
               ],
               [
                 {
-                  text: this.meetingAgenda.objective,
+                  text: this.meetingForm.value.objective,
                   style: 'tableBody'
                 }
               ]
@@ -112,7 +173,7 @@ export class MeetingAgendaComponent {
                 { text: 'Mail', style: 'sectionHeader' },
                 { text: 'Phone', style: 'sectionHeader' }
               ],
-              ...this.meetingAgenda.attendees.map((p) => [
+              ...this.getAttendeesFormControls.value.map((p) => [
                 p.name,
                 p.department,
                 p.mail,
@@ -140,7 +201,7 @@ export class MeetingAgendaComponent {
                 { text: 'Owner', style: 'sectionHeader' },
                 { text: 'Time', style: 'sectionHeader' }
               ],
-              ...this.meetingAgenda.agenda.map((p) => [
+              ...this.getAgendaFormControls.value.map((p) => [
                 p.topic,
                 p.owner,
                 p.time
@@ -162,10 +223,10 @@ export class MeetingAgendaComponent {
                 ''
               ],
               [
-                { text: 'Desc', style: 'sectionHeader' },
-                { text: 'PB', style: 'sectionHeader' }
+                { text: 'Description', style: 'sectionHeader' },
+                { text: 'Prepared By', style: 'sectionHeader' }
               ],
-              ...this.meetingAgenda.documents.map((p) => [
+              ...this.getPreparationFormControls.value.map((p) => [
                 p.description,
                 p.preparedBy
               ])
@@ -177,8 +238,8 @@ export class MeetingAgendaComponent {
         alignment: 'justify'
       },
       info: {
-        title: this.meetingAgenda.meetingName + '_MEETING MINUTES',
-        author: this.meetingAgenda.meetingName,
+        title: this.meetingForm.value.projectName + '_MEETING MINUTES',
+        author: this.meetingForm.value.projectName,
         subject: 'MOM',
         keywords: 'MOM'
       },
@@ -190,13 +251,9 @@ export class MeetingAgendaComponent {
         },
         sectionHeader: {
           bold: true,
-          fontSize: 14,
-          color: '#CAA23C',
+          fontSize: 12,
+          color: '#235185',
           margin: [0, 8]
-        },
-        name: {
-          fontSize: 16,
-          bold: true
         },
         tableHeader: {
           margin: [0, 8],
@@ -206,29 +263,21 @@ export class MeetingAgendaComponent {
         },
         tableBody: {
           margin: [0, 8],
-          fontSize: 12
+          fontSize: 10
         }
       }
     };
   }
-
-  addNewRow(data: string): void {
-    if (data === 'attendees') {
-      this.meetingAgenda.attendees.push(new Attendees());
-    } else if (data === 'agenda') {
-      this.meetingAgenda.agenda.push(new Agenda());
-    } else if (data === 'preparation') {
-      this.meetingAgenda.documents.push(new Documents());
-    }
-  }
-
   deleteRow(data: any, index: number) {
-    if (data.constructor.name === 'Attendees') {
-      this.meetingAgenda.attendees.splice(index, 1);
+    if (data === 'Attendees') {
+      const control = this.meetingForm.get('attendeesRows') as FormArray;
+      control.removeAt(index);
     } else if (data === 'agenda') {
-      this.meetingAgenda.agenda.splice(index, 1);
+      const control = this.meetingForm.get('agendaRows') as FormArray;
+      control.removeAt(index);
     } else if (data === 'preparation') {
-      this.meetingAgenda.documents.splice(index, 1);
+      const control = this.meetingForm.get('tableRows') as FormArray;
+      control.removeAt(index);
     }
   }
 }

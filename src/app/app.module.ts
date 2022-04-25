@@ -15,7 +15,7 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MeetingAgendaComponent } from './pages/components/meeting-agenda/meeting-agenda.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   TuiAccordionModule,
   TuiFieldErrorModule,
@@ -51,7 +51,8 @@ import { TuiOverscrollModule } from '@taiga-ui/cdk';
     TuiInputDateModule,
     TuiInputTimeModule,
     TuiDialogModule,
-    TuiInputPhoneInternationalModule
+    TuiInputPhoneInternationalModule,
+    ReactiveFormsModule
   ],
   providers: [
     {
