@@ -256,39 +256,37 @@
         <table tuiTable [columns]="preparation_columns">
           <thead tuiThead>
             <tr tuiThGroup>
-              <th *tuiHead="'description'" tuiTh [sorter]="null">
-                Description
-              </th>
-              <th *tuiHead="'preparedBy'" tuiTh [sorter]="null">Prepared By</th>
+              <th *tuiHead="'description'" tuiTh [sorter]="null">Desc</th>
+              <th *tuiHead="'preparedBy'" tuiTh [sorter]="null">PB</th>
               <th *tuiHead="'actions'" tuiTh [sorter]="null">Actions</th>
             </tr>
           </thead>
           <tbody tuiTbody>
             <tr
               tuiTr
-              *ngFor="let docs of meetingAgenda.documents; let i = index"
+              *ngFor="let documents of meetingAgenda.documents; let i = index"
             >
               <td *tuiCell="'description'" tuiTd>
                 <tui-text-area
                   name="description{{ i }}"
-                  [(ngModel)]="docs.description"
+                  [(ngModel)]="documents.description"
                   required
                 >
                 </tui-text-area>
               </td>
               <td *tuiCell="'preparedBy'" tuiTd>
-                <tui-text-area
+                <tui-input
                   name="preparedBy{{ i }}"
-                  [(ngModel)]="docs.preparedBy"
+                  [(ngModel)]="documents.preparedBy"
                   required
                 >
-                </tui-text-area>
+                </tui-input>
               </td>
               <td *tuiCell="'actions'" tuiTd>
                 <tui-svg
                   src="tuiIconTrashLarge"
                   class="icon"
-                  (click)="deleteRow(docs, i)"
+                  (click)="deleteRow(documents, i)"
                 ></tui-svg>
               </td>
             </tr>

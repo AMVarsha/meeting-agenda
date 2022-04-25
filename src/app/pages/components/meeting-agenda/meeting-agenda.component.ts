@@ -158,15 +158,12 @@ export class MeetingAgendaComponent {
             widths: ['*', '*'],
             body: [
               [
-                {
-                  text: 'Preparation (documents/handouts to bring, reading material etc.)',
-                  style: 'tableHeader',
-                  colSpan: 2
-                }
+                { text: 'Meeting Agenda', style: 'tableHeader', colSpan: 2 },
+                ''
               ],
               [
-                { text: 'Description', style: 'sectionHeader' },
-                { text: 'Prepared By', style: 'sectionHeader' }
+                { text: 'Desc', style: 'sectionHeader' },
+                { text: 'PB', style: 'sectionHeader' }
               ],
               ...this.meetingAgenda.documents.map((p) => [
                 p.description,
