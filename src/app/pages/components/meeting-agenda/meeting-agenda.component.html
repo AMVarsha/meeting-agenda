@@ -3,13 +3,25 @@
     <h2 class="tui-text_h2">Meeting Agenda</h2>
     <form [formGroup]="meetingForm">
       <div class="tui-container">
-        <button tuiButton type="button" appearance="accent" class="tui-space_right-3 tui-space_bottom-3"
-          icon="tuiIconDownloadLarge" [disabled]="meetingForm.invalid" (click)="generatePdf()">
-          Download as PDF</button><br /><br /><br />
+        <button
+          tuiButton
+          type="button"
+          appearance="accent"
+          class="tui-space_right-3 tui-space_bottom-3"
+          icon="tuiIconDownloadLarge"
+          [disabled]="meetingForm.invalid"
+          (click)="generatePdf()"
+        >
+          Download as PDF</button
+        ><br /><br /><br />
         <div class="tui-form__row tui-form__row_multi-fields">
           <div class="tui-form__multi-field">
             <label tuiLabel label="Meeting / Project Name">
-              <tui-input tuiTextfieldSize="m" formControlName="projectName" required>
+              <tui-input
+                tuiTextfieldSize="m"
+                formControlName="projectName"
+                required
+              >
               </tui-input>
             </label>
           </div>
@@ -24,7 +36,11 @@
         <div class="tui-form__row tui-form__row_multi-fields">
           <div class="tui-form__multi-field">
             <label tuiLabel label="Meeting Facilitator">
-              <tui-input tuiTextfieldSize="m" formControlName="facilitator" required>
+              <tui-input
+                tuiTextfieldSize="m"
+                formControlName="facilitator"
+                required
+              >
               </tui-input>
             </label>
           </div>
@@ -36,7 +52,11 @@
           </div>
           <div class="tui-form__multi-field">
             <label tuiLabel label="Location">
-              <tui-input tuiTextfieldSize="m" formControlName="location" required>
+              <tui-input
+                tuiTextfieldSize="m"
+                formControlName="location"
+                required
+              >
               </tui-input>
             </label>
           </div>
@@ -45,14 +65,19 @@
       <div class="tui-container">
         <div class="tui-col-12">
           <h3>1. Meeting Objective</h3>
-          <tui-text-area formControlName="objective" required>
-          </tui-text-area>
+          <tui-text-area formControlName="objective" required> </tui-text-area>
         </div>
       </div>
       <div class="tui-container">
         <h3>2. Attendees</h3>
-        <tui-svg src="tuiIconPlusCircleLarge" class="icon" (click)="addNewRow('attendees')" class="add-row">
-        </tui-svg><br /><br />
+        <tui-svg
+          src="tuiIconPlusCircleLarge"
+          class="icon"
+          (click)="addNewRow('attendees')"
+          class="add-row"
+        >
+        </tui-svg
+        ><br /><br />
         <table tuiTable [columns]="attendees_columns" class="table">
           <thead tuiThead>
             <tr tuiThGroup>
@@ -68,26 +93,43 @@
             </tr>
           </thead>
           <tbody tuiTbody formArrayName="attendeesRows">
-            <tr tuiTr *ngFor="let group of getAttendeesFormControls.controls ; let i=index" [formGroupName]="i">
+            <tr
+              tuiTr
+              *ngFor="
+                let group of getAttendeesFormControls.controls;
+                let i = index
+              "
+              [formGroupName]="i"
+            >
               <td *tuiCell="'name'" tuiTd>
-                <tui-input formControlName="name" required>
-                </tui-input>
+                <tui-input formControlName="name" required> </tui-input>
               </td>
               <td *tuiCell="'department'" tuiTd>
-                <tui-input formControlName="department" required>
-                </tui-input>
+                <tui-input formControlName="department" required> </tui-input>
               </td>
               <td *tuiCell="'mail'" tuiTd>
                 <tui-input class="form-control" formControlName="mail" required>
                 </tui-input>
-                <span class="text-danger"
-                  *ngIf="getAttendeesFormControls.controls[i].get('mail').touched && getAttendeesFormControls.controls[i].get('mail').errors?.email">
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    getAttendeesFormControls.controls[i].get('mail').touched &&
+                    getAttendeesFormControls.controls[i].get('mail').errors
+                      ?.email
+                  "
+                >
                   Enter a valid email address
                 </span>
               </td>
               <td *tuiCell="'phone'" tuiTd>
-                <tui-input-phone-international class="input" [countries]="countries" [(countryIsoCode)]="countryIsoCode"
-                  formControlName="phone" minlength="12" required>
+                <tui-input-phone-international
+                  class="input"
+                  [countries]="countries"
+                  [(countryIsoCode)]="countryIsoCode"
+                  formControlName="phone"
+                  minlength="12"
+                  required
+                >
                   Type your number
                 </tui-input-phone-international>
                 <!-- <span
@@ -98,7 +140,11 @@
                 </span> -->
               </td>
               <td *tuiCell="'actions'" tuiTd>
-                <tui-svg src="tuiIconTrashLarge" class="icon" (click)="deleteRow('Attendees', i)"></tui-svg>
+                <tui-svg
+                  src="tuiIconTrashLarge"
+                  class="icon"
+                  (click)="deleteRow('Attendees', i)"
+                ></tui-svg>
               </td>
             </tr>
           </tbody>
@@ -106,8 +152,14 @@
       </div>
       <div class="tui-container">
         <h3>3. Meeting Agenda</h3>
-        <tui-svg src="tuiIconPlusCircleLarge" class="icon" (click)="addNewRow('agenda')" class="add-row">
-        </tui-svg><br /><br />
+        <tui-svg
+          src="tuiIconPlusCircleLarge"
+          class="icon"
+          (click)="addNewRow('agenda')"
+          class="add-row"
+        >
+        </tui-svg
+        ><br /><br />
         <table tuiTable [columns]="agenda_columns">
           <thead tuiThead>
             <tr tuiThGroup>
@@ -118,21 +170,30 @@
             </tr>
           </thead>
           <tbody tuiTbody formArrayName="agendaRows">
-            <tr tuiTr *ngFor="let agenda of getAgendaFormControls.controls ; let i=index" [formGroupName]="i">
+            <tr
+              tuiTr
+              *ngFor="
+                let agenda of getAgendaFormControls.controls;
+                let i = index
+              "
+              [formGroupName]="i"
+            >
               <td *tuiCell="'topic'" tuiTd>
                 <tui-text-area formControlName="topic" required>
                 </tui-text-area>
               </td>
               <td *tuiCell="'owner'" tuiTd>
-                <tui-input formControlName="owner" required>
-                </tui-input>
+                <tui-input formControlName="owner" required> </tui-input>
               </td>
               <td *tuiCell="'time'" tuiTd>
-                <tui-input formControlName="time" required>
-                </tui-input>
+                <tui-input formControlName="time" required> </tui-input>
               </td>
               <td *tuiCell="'actions'" tuiTd>
-                <tui-svg src="tuiIconTrashLarge" class="icon" (click)="deleteRow(agenda, i)"></tui-svg>
+                <tui-svg
+                  src="tuiIconTrashLarge"
+                  class="icon"
+                  (click)="deleteRow(agenda, i)"
+                ></tui-svg>
               </td>
             </tr>
           </tbody>
@@ -142,8 +203,14 @@
         <h3>
           4. Preparation (documents/handouts to bring, reading material etc.)
         </h3>
-        <tui-svg src="tuiIconPlusCircleLarge" class="icon" (click)="addNewRow('preparation')" class="add-row">
-        </tui-svg><br /><br />
+        <tui-svg
+          src="tuiIconPlusCircleLarge"
+          class="icon"
+          (click)="addNewRow('preparation')"
+          class="add-row"
+        >
+        </tui-svg
+        ><br /><br />
         <table tuiTable [columns]="preparation_columns">
           <thead tuiThead>
             <tr tuiThGroup>
@@ -155,7 +222,14 @@
             </tr>
           </thead>
           <tbody tuiTbody formArrayName="preparationRows">
-            <tr tuiTr *ngFor="let group of getPreparationFormControls.controls ; let i=index" [formGroupName]="i">
+            <tr
+              tuiTr
+              *ngFor="
+                let group of getPreparationFormControls.controls;
+                let i = index
+              "
+              [formGroupName]="i"
+            >
               <td *tuiCell="'description'" tuiTd>
                 <tui-text-area formControlName="description" required>
                 </tui-text-area>
@@ -165,7 +239,11 @@
                 </tui-text-area>
               </td>
               <td *tuiCell="'actions'" tuiTd>
-                <tui-svg src="tuiIconTrashLarge" class="icon" (click)="deleteRow('documents',i)"></tui-svg>
+                <tui-svg
+                  src="tuiIconTrashLarge"
+                  class="icon"
+                  (click)="deleteRow('documents', i)"
+                ></tui-svg>
               </td>
             </tr>
           </tbody>

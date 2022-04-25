@@ -122,7 +122,10 @@ export class MeetingAgendaComponent implements OnInit {
               ],
               [
                 { text: 'Meeting Facilitator', style: 'tableHeader' },
-                { text: this.meetingForm.value.facilitator, style: 'tableBody' },
+                {
+                  text: this.meetingForm.value.facilitator,
+                  style: 'tableBody'
+                },
                 { text: 'Location', style: 'tableHeader' },
                 { text: this.meetingForm.value.location, style: 'tableBody' }
               ]
