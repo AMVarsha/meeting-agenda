@@ -6,6 +6,7 @@ import { TuiCountryIsoCode } from '@taiga-ui/i18n';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-meeting-agenda',
@@ -26,7 +27,7 @@ export class MeetingAgendaComponent implements OnInit {
   ngOnInit(): void {
     this.meetingForm = this.formBuilder.group({
       projectName: ['', Validators.required],
-      dom: [new TuiDay(2022, 4, 25), Validators.required],
+      dom: [null, Validators.required],
       facilitator: ['', Validators.required],
       time: ['', Validators.required],
       location: ['', Validators.required],
@@ -41,8 +42,8 @@ export class MeetingAgendaComponent implements OnInit {
     return this.formBuilder.group({
       name: ['', Validators.required],
       department: ['', [Validators.required]],
-      mail: ['', Validators.required, Validators.pattern(REGEX_PATTERNS.email)],
-      phone: ['', [Validators.required]]
+      mail: ['', [Validators.required, Validators.pattern(REGEX_PATTERNS.email)] ],
+      phone: ['', [Validators.required, Validators.minLength(12)]]
     });
   }
   agendaInitiateForm(): FormGroup {
@@ -116,7 +117,7 @@ export class MeetingAgendaComponent implements OnInit {
               ],
               [
                 { text: 'Date of Meeting', style: 'tableHeader' },
-                { text: this.meetingForm.value.dom, style: 'tableBody' },
+                { text: moment(this.meetingForm.value.dom).format("DD-MM-yyyy"), style: 'tableBody' },
                 { text: 'Time', style: 'tableHeader' },
                 { text: this.meetingForm.value.time, style: 'tableBody' }
               ],
@@ -261,7 +262,7 @@ export class MeetingAgendaComponent implements OnInit {
         tableHeader: {
           margin: [0, 8],
           fontSize: 14,
-          color: '#235185',
+          color: '#C10466',
           bold: true
         },
         tableBody: {
@@ -272,7 +273,7 @@ export class MeetingAgendaComponent implements OnInit {
     };
   }
   deleteRow(data: any, index: number) {
-    if (data === 'Attendees') {
+    if (data === 'attendees') {
       const control = this.meetingForm.get('attendeesRows') as FormArray;
       control.removeAt(index);
     } else if (data === 'agenda') {

@@ -110,14 +110,9 @@
               <td *tuiCell="'mail'" tuiTd>
                 <tui-input class="form-control" formControlName="mail" required>
                 </tui-input>
-                <span
-                  class="text-danger"
-                  *ngIf="
-                    getAttendeesFormControls.controls[i].get('mail').touched &&
-                    getAttendeesFormControls.controls[i].get('mail').errors
-                      ?.email
-                  "
-                >
+                <span class="text-danger" *ngIf="
+                group.get('mail').errors?.pattern
+                  ">
                   Enter a valid email address
                 </span>
               </td>
@@ -127,23 +122,21 @@
                   [countries]="countries"
                   [(countryIsoCode)]="countryIsoCode"
                   formControlName="phone"
-                  minlength="12"
                   required
                 >
                   Type your number
                 </tui-input-phone-international>
-                <!-- <span
-                  class="text-danger"
-                  *ngIf="phone.touched && phone.errors?.['minlength']"
-                >
-                  Enter a valid mobile number
-                </span> -->
+                <span class="text-danger" *ngIf="
+                group.get('phone').errors?.minlength
+                  ">
+                  Enter a valid phone number
+                </span>
               </td>
               <td *tuiCell="'actions'" tuiTd>
                 <tui-svg
                   src="tuiIconTrashLarge"
                   class="icon"
-                  (click)="deleteRow('Attendees', i)"
+                  (click)="deleteRow('attendees', i)"
                 ></tui-svg>
               </td>
             </tr>
@@ -192,7 +185,7 @@
                 <tui-svg
                   src="tuiIconTrashLarge"
                   class="icon"
-                  (click)="deleteRow(agenda, i)"
+                  (click)="deleteRow('agenda', i)"
                 ></tui-svg>
               </td>
             </tr>
@@ -242,7 +235,7 @@
                 <tui-svg
                   src="tuiIconTrashLarge"
                   class="icon"
-                  (click)="deleteRow('documents', i)"
+                  (click)="deleteRow('preparation', i)"
                 ></tui-svg>
               </td>
             </tr>
