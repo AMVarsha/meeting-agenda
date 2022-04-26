@@ -42,7 +42,10 @@ export class MeetingAgendaComponent implements OnInit {
     return this.formBuilder.group({
       name: ['', Validators.required],
       department: ['', [Validators.required]],
-      mail: ['', [Validators.required, Validators.pattern(REGEX_PATTERNS.email)] ],
+      mail: [
+        '',
+        [Validators.required, Validators.pattern(REGEX_PATTERNS.email)]
+      ],
       phone: ['', [Validators.required, Validators.minLength(12)]]
     });
   }
@@ -117,7 +120,10 @@ export class MeetingAgendaComponent implements OnInit {
               ],
               [
                 { text: 'Date of Meeting', style: 'tableHeader' },
-                { text: moment(this.meetingForm.value.dom).format("DD-MM-yyyy"), style: 'tableBody' },
+                {
+                  text: moment(this.meetingForm.value.dom).format('DD-MM-yyyy'),
+                  style: 'tableBody'
+                },
                 { text: 'Time', style: 'tableHeader' },
                 { text: this.meetingForm.value.time, style: 'tableBody' }
               ],

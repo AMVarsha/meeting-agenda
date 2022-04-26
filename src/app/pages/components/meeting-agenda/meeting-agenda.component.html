@@ -110,9 +110,10 @@
               <td *tuiCell="'mail'" tuiTd>
                 <tui-input class="form-control" formControlName="mail" required>
                 </tui-input>
-                <span class="text-danger" *ngIf="
-                group.get('mail').errors?.pattern
-                  ">
+                <span
+                  class="text-danger"
+                  *ngIf="group.get('mail').errors?.pattern"
+                >
                   Enter a valid email address
                 </span>
               </td>
@@ -126,9 +127,10 @@
                 >
                   Type your number
                 </tui-input-phone-international>
-                <span class="text-danger" *ngIf="
-                group.get('phone').errors?.minlength
-                  ">
+                <span
+                  class="text-danger"
+                  *ngIf="group.get('phone').errors?.minlength"
+                >
                   Enter a valid phone number
                 </span>
               </td>
