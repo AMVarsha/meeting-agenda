@@ -7,6 +7,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import * as moment from 'moment';
+import { TuiDialogService } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-meeting-agenda',
@@ -22,7 +23,7 @@ export class MeetingAgendaComponent implements OnInit {
 
   meetingForm: FormGroup;
   control: FormArray;
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private dialogService: TuiDialogService) {}
 
   ngOnInit(): void {
     this.meetingForm = this.formBuilder.group({
@@ -278,16 +279,33 @@ export class MeetingAgendaComponent implements OnInit {
       }
     };
   }
-  deleteRow(data: any, index: number) {
+  deleteRow(data: string, index: number): void {
     if (data === 'attendees') {
-      const control = this.meetingForm.get('attendeesRows') as FormArray;
-      control.removeAt(index);
+      Object.values(this.getAttendeesFormControls.value[index]).every(x => x === null || x === '')
+        ? this.confirmDeleteRow(data, index) : this.showDialog(data, index);
     } else if (data === 'agenda') {
-      const control = this.meetingForm.get('agendaRows') as FormArray;
-      control.removeAt(index);
-    } else if (data === 'preparation') {
-      const control = this.meetingForm.get('tableRows') as FormArray;
-      control.removeAt(index);
+      Object.values(this.getAgendaFormControls.value[index]).every(x => x === null || x === '') 
+      ? this.confirmDeleteRow(data, index) : this.showDialog(data, index);
+    } else {
+      Object.values(this.getPreparationFormControls.value[index]).every(x => x === null || x === '') 
+      ? this.confirmDeleteRow(data, index) : this.showDialog(data, index);
     }
+  }
+  showDialog(data: string, index: number): void {
+    this.dialogService
+      .open('This is a plain string dialog', { label: 'Heading', size: 's' })
+      .subscribe({
+        next: data => {
+          console.info(`Dialog emitted data = ${data}`);
+        },
+        complete: () => {
+          // this.confirmDeleteRow(data, index);
+          console.log('test');
+          
+        },
+      });
+  }
+  confirmDeleteRow(data: string, index: number) {
+    data === 'attendees' ? (this.getAttendeesFormControls).removeAt(index) : data === 'agenda' ? (this.getAgendaFormControls).removeAt(index) : (this.getPreparationFormControls).removeAt(index);
   }
 }

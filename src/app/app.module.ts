@@ -18,12 +18,9 @@ import { MeetingAgendaComponent } from './pages/components/meeting-agenda/meetin
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   TuiAccordionModule,
-  TuiFieldErrorModule,
   TuiInputDateModule,
   TuiInputModule,
-  TuiInputNumberModule,
   TuiInputPhoneInternationalModule,
-  TuiInputPhoneModule,
   TuiInputTimeModule,
   TuiTextAreaModule
 } from '@taiga-ui/kit';
