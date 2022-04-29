@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Injector, OnInit } from '@angular/core';
 import { COLUMNS, REGEX_PATTERNS } from '../constants';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TuiCountryIsoCode } from '@taiga-ui/i18n';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TuiDay } from '@taiga-ui/cdk';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import * as moment from 'moment';
 import { TuiDialogService } from '@taiga-ui/core';
+import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { DialogExampleComponent } from '../dialog-example/dialog-example.component';
 
 @Component({
   selector: 'app-meeting-agenda',
@@ -25,8 +26,8 @@ export class MeetingAgendaComponent implements OnInit {
   control: FormArray;
   constructor(
     private formBuilder: FormBuilder,
-    private dialogService: TuiDialogService
-  ) {}
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector) { }
 
   ngOnInit(): void {
     this.meetingForm = this.formBuilder.group({
@@ -303,16 +304,15 @@ export class MeetingAgendaComponent implements OnInit {
         : this.showDialog(data, index);
     }
   }
-  showDialog(data: string, index: number): void {
-    this.dialogService
-      .open('This is a plain string dialog', { label: 'Heading', size: 's' })
+  private readonly dialog = this.dialogService.open<number>(
+    new PolymorpheusComponent(DialogExampleComponent, this.injector),
+    { dismissible: true, label: 'Are you sure want to delete?' }
+  );
+  showDialog(rowData: string, index: number): void {
+    this.dialog
       .subscribe({
-        next: (data) => {
-          console.info(`Dialog emitted data = ${data}`);
-        },
-        complete: () => {
-          // this.confirmDeleteRow(data, index);
-          console.log('test');
+        next: data => {
+          data ? this.confirmDeleteRow(rowData, index) : ''
         }
       });
   }
@@ -320,7 +320,7 @@ export class MeetingAgendaComponent implements OnInit {
     data === 'attendees'
       ? this.getAttendeesFormControls.removeAt(index)
       : data === 'agenda'
-      ? this.getAgendaFormControls.removeAt(index)
-      : this.getPreparationFormControls.removeAt(index);
+        ? this.getAgendaFormControls.removeAt(index)
+        : this.getPreparationFormControls.removeAt(index);
   }
 }

@@ -17,7 +17,6 @@ import { AppComponent } from './app.component';
 import { MeetingAgendaComponent } from './pages/components/meeting-agenda/meeting-agenda.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-  TuiAccordionModule,
   TuiInputDateModule,
   TuiInputModule,
   TuiInputPhoneInternationalModule,
@@ -26,9 +25,11 @@ import {
 } from '@taiga-ui/kit';
 import { CommonModule } from '@angular/common';
 import { TuiOverscrollModule } from '@taiga-ui/cdk';
+import { PolymorpheusModule } from '@tinkoff/ng-polymorpheus';
+import { DialogExampleComponent } from './pages/components/dialog-example/dialog-example.component';
 
 @NgModule({
-  declarations: [AppComponent, MeetingAgendaComponent],
+  declarations: [AppComponent, MeetingAgendaComponent, DialogExampleComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -36,7 +37,6 @@ import { TuiOverscrollModule } from '@taiga-ui/cdk';
     AppRoutingModule,
     TuiRootModule,
     TuiTableModule,
-    TuiAccordionModule,
     TuiSvgModule,
     TuiInputModule,
     TuiTextAreaModule,
@@ -49,7 +49,8 @@ import { TuiOverscrollModule } from '@taiga-ui/cdk';
     TuiInputTimeModule,
     TuiDialogModule,
     TuiInputPhoneInternationalModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PolymorpheusModule
   ],
   providers: [
     {

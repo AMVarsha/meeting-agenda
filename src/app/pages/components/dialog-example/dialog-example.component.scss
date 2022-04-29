@@ -1,0 +1,13 @@
+:host {
+    display: block;
+}
+
+.heading {
+    font: var(--tui-font-heading-3);
+    margin: 0 0 24px;
+}
+
+.dialog {
+    width: 600px;
+    padding: 24px;
+}
