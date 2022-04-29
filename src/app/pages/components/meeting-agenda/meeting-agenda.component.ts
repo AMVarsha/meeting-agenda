@@ -27,7 +27,8 @@ export class MeetingAgendaComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
-    @Inject(Injector) private readonly injector: Injector) { }
+    @Inject(Injector) private readonly injector: Injector
+  ) {}
 
   ngOnInit(): void {
     this.meetingForm = this.formBuilder.group({
@@ -309,18 +310,17 @@ export class MeetingAgendaComponent implements OnInit {
     { dismissible: true, label: 'Are you sure want to delete?' }
   );
   showDialog(rowData: string, index: number): void {
-    this.dialog
-      .subscribe({
-        next: data => {
-          data ? this.confirmDeleteRow(rowData, index) : ''
-        }
-      });
+    this.dialog.subscribe({
+      next: (data) => {
+        data ? this.confirmDeleteRow(rowData, index) : '';
+      }
+    });
   }
   confirmDeleteRow(data: string, index: number) {
     data === 'attendees'
       ? this.getAttendeesFormControls.removeAt(index)
       : data === 'agenda'
-        ? this.getAgendaFormControls.removeAt(index)
-        : this.getPreparationFormControls.removeAt(index);
+      ? this.getAgendaFormControls.removeAt(index)
+      : this.getPreparationFormControls.removeAt(index);
   }
 }
